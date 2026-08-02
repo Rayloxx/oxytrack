@@ -1,100 +1,69 @@
 'use client';
 
-import { motion, useAnimation } from 'framer-motion';
-import { useEffect } from 'react';
-import { useTelemetrySync } from '@/components/network/TelemetrySync';
+import { motion } from 'framer-motion';
+import { useMotionTimeline } from '@/components/cinematic/MotionTimeline';
 
 export default function CameraDirector({
 children,
 }: {
 children: React.ReactNode;
 }) {
-const controls = useAnimation();
-const telemetry = useTelemetrySync();
+const timeline = useMotionTimeline();
 
-useEffect(() => {
-async function sequence() {
-// Phase 1: manifold focus
-await controls.start({
-scale: 1.18,
-y: 24,
-filter: 'blur(0px)',
-transition: {
-duration: 1.4,
-ease: [0.22, 1, 0.36, 1],
-},
-});
-
-  // Phase 2: pressure ignition
-  await controls.start({
-    scale: 1.08,
-    y: 8,
-    transition: {
-      duration: 0.9,
-      ease: [0.22, 1, 0.36, 1],
-    },
-  });
-
-  // Phase 3: network expansion
-  await controls.start({
-    scale: 1,
-    y: 0,
-    transition: {
-      duration: 1.8,
-      ease: [0.16, 1, 0.3, 1],
-    },
-  });
-}
-
-sequence();
-
-}, [controls]);
+const state =
+timeline.phase === 'boot'
+? { scale: 1.25, y: 32, glow: 0.08 }
+: timeline.phase === 'logo'
+? { scale: 1.18, y: 24, glow: 0.12 }
+: timeline.phase === 'ignition'
+? { scale: 1.12, y: 12, glow: 0.18 }
+: timeline.phase === 'network'
+? { scale: 1.05, y: 4, glow: 0.22 }
+: timeline.phase === 'telemetry'
+? { scale: 1.02, y: 0, glow: 0.18 }
+: timeline.phase === 'dashboard'
+? { scale: 1, y: 0, glow: 0.14 }
+: { scale: 1, y: 0, glow: 0.12 };
 
 return (
 <motion.div
-animate={controls}
+animate={{
+scale: state.scale,
+y: state.y,
+}}
+transition={{
+duration: 1.2,
+ease: [0.22, 1, 0.36, 1],
+}}
 className='relative h-full w-full transform-gpu'
 style={{
 transformOrigin: '50% 50%',
 }}
 >
-{/* Cinematic vignette */} <div className='absolute inset-0 rounded-[36px] bg-[radial-gradient(circle_at_center,transparent_0%,transparent_58%,rgba(2,6,23,0.28)_82%,rgba(2,6,23,0.72)_100%)] pointer-events-none' />
+<motion.div
+className='absolute left-1/2 top-1/2 h-[640px] w-[640px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-400 blur-[140px] pointer-events-none'
+animate={{
+opacity: state.glow,
+scale: state.scale,
+}}
+transition={{
+duration: 1,
+}}
+/>
 
-  {/* Dynamic atmospheric glow */}
   <motion.div
-    className='absolute left-1/2 top-1/2 h-[560px] w-[560px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-400/10 blur-[120px] pointer-events-none'
-    animate={{
-      scale:
-        telemetry.phase === 'propagating'
-          ? 1.12
-          : telemetry.phase === 'stabilizing'
-          ? 1.04
-          : 1,
-      opacity:
-        telemetry.phase === 'propagating'
-          ? 0.22
-          : telemetry.phase === 'stabilizing'
-          ? 0.16
-          : 0.12,
-    }}
-    transition={{
-      duration: 0.8,
-      ease: 'easeOut',
-    }}
-  />
-
-  {/* Core content */}
-  <motion.div
+    className='relative h-full w-full'
     animate={{
       filter:
-        telemetry.phase === 'propagating'
+        timeline.phase === 'ignition'
           ? 'brightness(1.08)'
+          : timeline.phase === 'network'
+          ? 'brightness(1.04)'
           : 'brightness(1)',
     }}
     transition={{
-      duration: 0.6,
+      duration: 0.8,
     }}
-    className='relative h-full w-full'
   >
     {children}
   </motion.div>
