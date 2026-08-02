@@ -12,6 +12,7 @@ import HospitalTopologySection from '@/components/topology/HospitalTopologySecti
 import EconomicImpactSection from '@/components/economics/EconomicImpactSection';
 import CommandCenterSection from '@/components/command/CommandCenterSection';
 import ClinicalReliabilitySection from '@/components/reliability/ClinicalReliabilitySection';
+import FinalCommandSection from '@/components/cta/FinalCommandSection';
 
 export default function HomePage() {
 const [bootComplete, setBootComplete] = useState(false);
@@ -40,6 +41,7 @@ return ( <main className='min-h-screen bg-[#020617] text-white overflow-hidden'>
 <EconomicImpactSection />
 <CommandCenterSection />
 <ClinicalReliabilitySection />
+<FinalCommandSection />
   </div>
 </main>
 
