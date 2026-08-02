@@ -53,6 +53,20 @@ Dashboard & Mobile Alerts
 - `hardware/` sensor and embedded systems
 - `legacy-website/` previous website version
 
+- ## Project status
+
+| Component                 | Status      |
+| ------------------------- | ----------- |
+| System architecture       | Complete    |
+| Telemetry design          | Complete    |
+| Sensor specification      | Complete    |
+| Research documentation    | Complete    |
+| Dashboard architecture    | Complete    |
+| ESP32 firmware foundation | In progress |
+| Cloud platform            | Planned     |
+| Pilot deployment          | Planned     |
+
+
 ## Current milestone
 
 - Oxygen telemetry research
