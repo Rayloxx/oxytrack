@@ -98,6 +98,7 @@ return ( <section className='relative min-h-screen overflow-hidden bg-[#020617]'
     {/* Right column */}
     <div className="relative h-[720px]">
   <TelemetryHUD />
+  <PressureWaveEngine />
 
   <div className="absolute inset-0 rounded-[36px] border border-white/10 bg-white/[0.03] backdrop-blur-xl">
     <OxygenNetwork3D />
