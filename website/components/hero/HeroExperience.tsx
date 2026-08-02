@@ -8,6 +8,8 @@ import PressureWaveEngine from '@/components/network/PressureWaveEngine';
 
 import TelemetryPulseOverlay from '@/components/network/TelemetryPulseOverlay';
 
+import HolographicTelemetry from '@/components/network/HolographicTelemetry';
+
 export default function HeroExperience() {
 return ( <section className='relative min-h-screen overflow-hidden bg-[#020617]'>
 {/* Background atmosphere */} <div className='absolute inset-0'> <div className='absolute left-1/2 top-[42%] h-[900px] w-[900px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-500/[0.08] blur-[180px]' /> </div>
@@ -102,6 +104,7 @@ return ( <section className='relative min-h-screen overflow-hidden bg-[#020617]'
   <TelemetryHUD />
   <PressureWaveEngine />
   <TelemetryPulseOverlay />
+  <HolographicTelemetry />
 
   <div className="absolute inset-0 rounded-[36px] border border-white/10 bg-white/[0.03] backdrop-blur-xl">
     <OxygenNetwork3D />
