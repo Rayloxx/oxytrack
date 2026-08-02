@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import BootSequence from '@/components/boot/BootSequence';
 import HeroExperience from '@/components/hero/HeroExperience';
+import DataFlowSection from '@/components/architecture/DataFlowSection';
 
 export default function HomePage() {
   const [bootComplete, setBootComplete] = useState(false);
