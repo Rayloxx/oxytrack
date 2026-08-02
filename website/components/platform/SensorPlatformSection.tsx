@@ -1,5 +1,7 @@
 'use client';
 
+import SectionContainer from '@/components/layout/SectionContainer';
+
 const features = [
 {
 title: 'Pressure telemetry',
@@ -33,9 +35,8 @@ return ( <section
    className='relative overflow-hidden bg-[#030712] py-32'
  > <div className='absolute inset-0'> <div className='absolute left-1/2 top-1/2 h-[900px] w-[900px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-500/[0.05] blur-[180px]' /> </div>
 
-  <div className='relative z-10 mx-auto max-w-7xl px-8'>
+  <SectionContainer className='relative z-10'>
     <div className='grid gap-16 lg:grid-cols-[0.9fr_1.1fr] lg:items-center'>
-      {/* Left */}
       <div>
         <div className='text-sm uppercase tracking-[0.35em] text-cyan-300'>
           Sensor platform
@@ -46,9 +47,10 @@ return ( <section
         </h2>
 
         <p className='mt-8 text-lg leading-8 text-white/65'>
-          OxyTrack combines industrial-grade pressure sensing, flow telemetry,
-          embedded edge computing, and cloud analytics to create a continuous
-          intelligence layer across medical gas pipeline systems.
+          OxyTrack combines industrial-grade pressure sensing, flow
+          telemetry, embedded edge computing, and cloud analytics to create
+          a continuous intelligence layer across medical gas pipeline
+          systems.
         </p>
 
         <div className='mt-10 space-y-6'>
@@ -71,7 +73,6 @@ return ( <section
         </div>
       </div>
 
-      {/* Right */}
       <div className='grid gap-6 md:grid-cols-2'>
         {features.map((feature) => (
           <div
@@ -101,7 +102,6 @@ return ( <section
       </div>
     </div>
 
-    {/* Hardware architecture preview */}
     <div className='mt-24 rounded-[36px] border border-white/10 bg-white/[0.03] p-10 backdrop-blur-xl'>
       <div className='text-sm uppercase tracking-[0.35em] text-cyan-300'>
         Hardware architecture
@@ -129,7 +129,7 @@ return ( <section
         ))}
       </div>
     </div>
-  </div>
+  </SectionContainer>
 </section>
 
 );
