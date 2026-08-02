@@ -1,76 +1,78 @@
-@keyframes pressure-wave {
+@keyframes networkActivate {
   0% {
-    transform: scale(0.15);
-    opacity: 0;
-  }
-
-  15% {
-    opacity: 1;
-  }
-
-  60% {
-    opacity: 0.45;
-  }
-
-  100% {
-    transform: scale(10);
-    opacity: 0;
-  }
-}
-
-@keyframes pressure-core {
-  0% {
-    transform: scale(0.6);
+    stroke-dasharray: 1200;
+    stroke-dashoffset: 1200;
     opacity: 0;
   }
 
   20% {
-    transform: scale(1);
-    opacity: 0.8;
-  }
-
-  100% {
-    transform: scale(2.8);
-    opacity: 0;
-  }
-}
-
-@keyframes pressure-rays {
-  0% {
-    opacity: 0;
-    transform: scale(0.9);
-  }
-
-  25% {
     opacity: 1;
   }
 
   100% {
-    opacity: 0;
-    transform: scale(1.05);
+    stroke-dasharray: 1200;
+    stroke-dashoffset: 0;
+    opacity: 1;
   }
 }
 
-.pulse-wave {
-  animation: pressure-wave 2.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+.network-line {
+  stroke-dasharray: 1200;
+  stroke-dashoffset: 1200;
+  animation: networkActivate 1.6s ease-out forwards;
 }
 
-.pulse-wave-1 {
-  animation-delay: 0s;
+.network-line-1 {
+  animation-delay: 0.2s;
+}
+.network-line-2 {
+  animation-delay: 0.35s;
+}
+.network-line-3 {
+  animation-delay: 0.5s;
+}
+.network-line-4 {
+  animation-delay: 0.65s;
+}
+.network-line-5 {
+  animation-delay: 0.8s;
+}
+.network-line-6 {
+  animation-delay: 0.95s;
 }
 
-.pulse-wave-2 {
-  animation-delay: 0.18s;
+.sensor-node {
+  opacity: 0;
+  animation: sensorFadeIn 0.8s ease-out forwards;
 }
 
-.pulse-wave-3 {
-  animation-delay: 0.36s;
+.sensor-node:nth-child(1) {
+  animation-delay: 0.9s;
+}
+.sensor-node:nth-child(2) {
+  animation-delay: 1.1s;
+}
+.sensor-node:nth-child(3) {
+  animation-delay: 1.3s;
+}
+.sensor-node:nth-child(4) {
+  animation-delay: 1.5s;
+}
+.sensor-node:nth-child(5) {
+  animation-delay: 1.7s;
+}
+.sensor-node:nth-child(6) {
+  animation-delay: 1.9s;
 }
 
-.pulse-core {
-  animation: pressure-core 1.4s ease-out forwards;
-}
+@keyframes sensorFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.85);
+  }
 
-.pulse-rays {
-  animation: pressure-rays 1.8s ease-out forwards;
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
