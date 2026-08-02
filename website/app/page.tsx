@@ -20,12 +20,12 @@ export default function HomePage() {
       )}
 
       <div
-        className={`transition-opacity duration-1000 ${
-          bootComplete ? 'opacity-100' : 'opacity-0'
-        }`}
-      >
-        <HeroExperience />
-      </div>
+  className={`transition-opacity duration-1000 ${
+    bootComplete ? 'opacity-100' : 'opacity-0'
+  }`}
+>
+  <HeroExperience />
+</div>
     </main>
   );
 }
