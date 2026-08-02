@@ -1,0 +1,76 @@
+@keyframes pressure-wave {
+  0% {
+    transform: scale(0.15);
+    opacity: 0;
+  }
+
+  15% {
+    opacity: 1;
+  }
+
+  60% {
+    opacity: 0.45;
+  }
+
+  100% {
+    transform: scale(10);
+    opacity: 0;
+  }
+}
+
+@keyframes pressure-core {
+  0% {
+    transform: scale(0.6);
+    opacity: 0;
+  }
+
+  20% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+
+  100% {
+    transform: scale(2.8);
+    opacity: 0;
+  }
+}
+
+@keyframes pressure-rays {
+  0% {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+
+  25% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1.05);
+  }
+}
+
+.pulse-wave {
+  animation: pressure-wave 2.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.pulse-wave-1 {
+  animation-delay: 0s;
+}
+
+.pulse-wave-2 {
+  animation-delay: 0.18s;
+}
+
+.pulse-wave-3 {
+  animation-delay: 0.36s;
+}
+
+.pulse-core {
+  animation: pressure-core 1.4s ease-out forwards;
+}
+
+.pulse-rays {
+  animation: pressure-rays 1.8s ease-out forwards;
+}
