@@ -5,6 +5,7 @@ import BootSequence from '@/components/boot/BootSequence';
 import HeroExperience from '@/components/hero/HeroExperience';
 import DataFlowSection from '@/components/architecture/DataFlowSection';
 import SensorPlatformSection from '@/components/platform/SensorPlatformSection';
+import MissionControlSection from '@/components/dashboard/MissionControlSection';
 
 export default function HomePage() {
   const [bootComplete, setBootComplete] = useState(false);
@@ -26,8 +27,9 @@ export default function HomePage() {
   }`}
 >
   <HeroExperience />
-  <DataFlowSection />
-  <SensorPlatformSection />
+<DataFlowSection />
+<SensorPlatformSection />
+<MissionControlSection />
 </div>
     </main>
   );
