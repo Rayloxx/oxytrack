@@ -1,5 +1,7 @@
 'use client';
 
+import TelemetryHUD from '@/components/hero/TelemetryHUD';
+
 import OxygenNetwork3D from '@/components/network/OxygenNetwork3D';
 
 export default function HeroExperience() {
