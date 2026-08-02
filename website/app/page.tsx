@@ -7,6 +7,7 @@ import HeroExperience from '@/components/hero/HeroExperience';
 import DataFlowSection from '@/components/architecture/DataFlowSection';
 import SensorPlatformSection from '@/components/platform/SensorPlatformSection';
 import MissionControlSection from '@/components/dashboard/MissionControlSection';
+import IntelligenceEngineSection from '@/components/intelligence/IntelligenceEngineSection';
 
 export default function HomePage() {
 const [bootComplete, setBootComplete] = useState(false);
@@ -27,9 +28,10 @@ return ( <main className='min-h-screen bg-[#020617] text-white overflow-hidden'>
     }`}
   >
     <HeroExperience />
-    <DataFlowSection />
-    <SensorPlatformSection />
-    <MissionControlSection />
+<DataFlowSection />
+<SensorPlatformSection />
+<MissionControlSection />
+<IntelligenceEngineSection />
   </div>
 </main>
 
