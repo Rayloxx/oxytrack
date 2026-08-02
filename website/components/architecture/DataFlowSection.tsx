@@ -1,5 +1,7 @@
 'use client';
 
+import SectionContainer from '@/components/layout/SectionContainer';
+
 const steps = [
 {
 title: 'Bulk oxygen source',
@@ -45,8 +47,7 @@ return ( <section
    className='relative overflow-hidden bg-[#020617] py-32'
  > <div className='absolute inset-0'> <div className='absolute left-1/2 top-0 h-[700px] w-[700px] -translate-x-1/2 rounded-full bg-cyan-500/[0.05] blur-[160px]' /> </div>
 
-```
-  <div className='relative z-10 mx-auto max-w-7xl px-8'>
+  <SectionContainer className='relative z-10'>
     <div className='max-w-3xl'>
       <div className='text-sm uppercase tracking-[0.35em] text-cyan-300'>
         System architecture
@@ -86,7 +87,7 @@ return ( <section
                 {step.title}
               </h3>
 
-              <p className='mt-4 max-w-3xl text-white/65 leading-7'>
+              <p className='mt-4 max-w-3xl leading-7 text-white/65'>
                 {step.description}
               </p>
             </div>
@@ -123,8 +124,7 @@ return ( <section
         </div>
       </div>
     </div>
-  </div>
+  </SectionContainer>
 </section>
-
 );
 }
