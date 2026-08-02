@@ -345,3 +345,108 @@ body {
 .fade-mask {
   mask-image: radial-gradient(circle, white 55%, transparent 100%);
 }
+
+/* -------------------------------------------------------------------------- */
+/* Pressure wave engine */
+/* -------------------------------------------------------------------------- */
+
+@keyframes pressureRing {
+  0% {
+    transform: translate(-50%, -50%) scale(0.4);
+    opacity: 0;
+  }
+
+  15% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translate(-50%, -50%) scale(18);
+    opacity: 0;
+  }
+}
+
+@keyframes pressureFlash {
+  0% {
+    transform: translate(-50%, -50%) scale(0.8);
+    opacity: 0;
+  }
+
+  20% {
+    opacity: 0.8;
+  }
+
+  100% {
+    transform: translate(-50%, -50%) scale(6);
+    opacity: 0;
+  }
+}
+
+@keyframes pressurePath {
+  0% {
+    stroke-dasharray: 600;
+    stroke-dashoffset: 600;
+    opacity: 0;
+  }
+
+  20% {
+    opacity: 1;
+  }
+
+  100% {
+    stroke-dasharray: 600;
+    stroke-dashoffset: 0;
+    opacity: 0;
+  }
+}
+
+.pressure-ring {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  animation: pressureRing 2.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.pressure-ring-1 {
+  animation-delay: 0s;
+}
+
+.pressure-ring-2 {
+  animation-delay: 0.18s;
+}
+
+.pressure-ring-3 {
+  animation-delay: 0.36s;
+}
+
+.pressure-flash {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  animation: pressureFlash 1.2s ease-out forwards;
+}
+
+.pressure-path {
+  stroke-dasharray: 600;
+  stroke-dashoffset: 600;
+  animation: pressurePath 1.8s ease-out forwards;
+}
+
+.pressure-path-1 {
+  animation-delay: 0.1s;
+}
+.pressure-path-2 {
+  animation-delay: 0.22s;
+}
+.pressure-path-3 {
+  animation-delay: 0.34s;
+}
+.pressure-path-4 {
+  animation-delay: 0.46s;
+}
+.pressure-path-5 {
+  animation-delay: 0.58s;
+}
+.pressure-path-6 {
+  animation-delay: 0.7s;
+}
