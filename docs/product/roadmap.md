@@ -4,7 +4,7 @@
 
 Build Africa’s leading intelligent oxygen infrastructure monitoring platform for hospitals through IoT telemetry, analytics, and predictive maintenance.
 
-## Phase 1 — Research and architecture (August–September 2026)
+## Phase 1 — Research and architecture (June–August 2026)
 
 ### Objectives
 
@@ -22,7 +22,7 @@ Build Africa’s leading intelligent oxygen infrastructure monitoring platform f
 * initial schematics
 * dashboard wireframes
 
-## Phase 2 — Prototype development (October–November 2026)
+## Phase 2 — Prototype development (August–September 2026)
 
 ### Hardware
 
