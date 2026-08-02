@@ -66,6 +66,24 @@ Dashboard & Mobile Alerts
 | Cloud platform            | Planned     |
 | Pilot deployment          | Planned     |
 
+## Engineering maturity
+
+Architecture: 90%
+
+Research: 90%
+
+Hardware design: 80%
+
+Firmware foundation: 70%
+
+Cloud architecture: 80%
+
+Dashboard architecture: 85%
+
+Deployment planning: 80%
+
+Pilot planning: 85%
+
 
 ## Current milestone
 
