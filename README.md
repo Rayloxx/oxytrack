@@ -1,36 +1,67 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# OxyTrack Technologies
 
-## Getting Started
+**From Tank to Bedside: Every Breath Accounted For.**
 
-First, run the development server:
+OxyTrack is an intelligent hospital oxygen infrastructure monitoring platform that provides **real-time visibility into medical oxygen pipeline systems** through distributed IoT sensors, telemetry analytics, and predictive infrastructure intelligence.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Mission
+
+To digitize hospital oxygen distribution networks and enable biomedical engineers and hospital administrators to monitor **pressure, flow rate, oxygen availability, and infrastructure health in real time**.
+
+## The problem
+
+Hospitals often lack continuous visibility into oxygen distribution across wards. Pressure drops, leakages, abnormal flow patterns, and infrastructure faults are frequently detected through manual inspections and delayed reporting.
+
+## The solution
+
+OxyTrack transforms hospital oxygen pipelines into a connected telemetry network using:
+
+- Pressure sensors
+- Flow sensors
+- ESP32 sensor nodes
+- MQTT communication
+- Cloud analytics
+- Real-time dashboards
+- Automated alerts
+- Predictive maintenance intelligence
+
+## System architecture
+
+```
+Central Oxygen Tank
+        |
+Pressure & Flow Sensors
+        |
+ESP32 Telemetry Nodes
+        |
+MQTT Gateway
+        |
+Cloud Platform
+        |
+Analytics Engine
+        |
+Dashboard & Mobile Alerts
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Repository structure
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- `docs/` technical documentation and research
+- `diagrams/` system architecture and pipeline schematics
+- `dashboard/` monitoring interface
+- `backend/` telemetry and analytics services
+- `frontend/` web platform
+- `hardware/` sensor and embedded systems
+- `legacy-website/` previous website version
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Current milestone
 
-## Learn More
+- Oxygen telemetry research
+- Pressure monitoring architecture
+- Flow rate analytics
+- Hospital oxygen workflow validation
+- Dashboard prototype design
+- Pilot implementation planning
 
-To learn more about Next.js, take a look at the following resources:
+## Vision
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Building the intelligence layer for hospital oxygen infrastructure across Africa.
