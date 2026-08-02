@@ -103,7 +103,6 @@ return ( <section className='relative min-h-screen overflow-hidden bg-[#020617]'
 </div>
   </div>
 </section>
-```
 
 );
 }
