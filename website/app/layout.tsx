@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { TelemetryProvider } from '@/components/network/TelemetrySync';
 
 export const metadata: Metadata = {
   title: "OxyTrack Technologies",
@@ -18,8 +19,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="bg-[#020617] text-white antialiased">
-        {children}
-      </body>
+  <TelemetryProvider>
+    {children}
+  </TelemetryProvider>
+</body>
     </html>
   );
 }
