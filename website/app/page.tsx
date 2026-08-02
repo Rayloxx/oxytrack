@@ -9,6 +9,7 @@ import SensorPlatformSection from '@/components/platform/SensorPlatformSection';
 import MissionControlSection from '@/components/dashboard/MissionControlSection';
 import IntelligenceEngineSection from '@/components/intelligence/IntelligenceEngineSection';
 import HospitalTopologySection from '@/components/topology/HospitalTopologySection';
+import EconomicImpactSection from '@/components/economics/EconomicImpactSection';
 
 export default function HomePage() {
 const [bootComplete, setBootComplete] = useState(false);
@@ -34,6 +35,7 @@ return ( <main className='min-h-screen bg-[#020617] text-white overflow-hidden'>
 <MissionControlSection />
 <IntelligenceEngineSection />
 <HospitalTopologySection />
+<EconomicImpactSection />
   </div>
 </main>
 
