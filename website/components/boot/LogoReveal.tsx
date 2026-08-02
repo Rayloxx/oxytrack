@@ -7,44 +7,51 @@ const LogoReveal = forwardRef<HTMLDivElement>(function LogoReveal(_, ref) {
   return (
     <div
       ref={ref}
-      className="relative flex flex-col items-center justify-center select-none"
+      className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[#020617]"
     >
-      {/* Precision ambient light */}
-      <div className="absolute h-[520px] w-[520px] rounded-full bg-cyan-500/8 blur-[120px]" />
-      <div className="absolute h-[260px] w-[260px] rounded-full border border-cyan-400/10" />
-
-      {/* Logo */}
-      <div className="relative z-10">
-        <Image
-          src="/logo/oxytrack-logo.svg"
-          alt="OxyTrack Technologies"
-          width={240}
-          height={240}
-          priority
-          className="h-auto w-[180px] md:w-[220px] lg:w-[240px]"
-        />
+      {/* Ambient background */}
+      <div className="absolute inset-0">
+        <div className="absolute left-1/2 top-1/2 h-[900px] w-[900px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-500/8 blur-[180px]" />
+        <div className="absolute left-1/2 top-1/2 h-[520px] w-[520px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-cyan-400/10" />
       </div>
 
-      {/* Brand text */}
-      <div className="relative z-10 mt-10 text-center">
-        <h1 className="text-5xl font-semibold tracking-[0.28em] text-white md:text-6xl lg:text-7xl">
-          OXYTRACK
-        </h1>
+      {/* Central composition */}
+      <div className="relative z-10 flex flex-col items-center justify-center">
+        {/* Logo */}
+        <div className="relative">
+          <div className="absolute inset-0 scale-125 rounded-full bg-cyan-400/10 blur-[60px]" />
 
-        <div className="mt-5 text-sm uppercase tracking-[0.45em] text-cyan-300">
-          Hospital oxygen infrastructure intelligence
+          <Image
+            src="/logo/oxytrack-logo.png"
+            alt="OxyTrack Technologies"
+            width={260}
+            height={260}
+            priority
+            className="relative h-auto w-[180px] md:w-[220px] lg:w-[260px] object-contain"
+          />
         </div>
 
-        <div className="mt-3 text-xs tracking-[0.3em] text-white/45">
-          Pressure • Flow • Telemetry • Analytics
+        {/* Wordmark */}
+        <div className="mt-12 text-center">
+          <h1 className="text-5xl font-semibold tracking-[0.32em] text-white md:text-6xl lg:text-7xl">
+            OXYTRACK
+          </h1>
+
+          <div className="mt-5 text-sm uppercase tracking-[0.48em] text-cyan-300">
+            Hospital oxygen infrastructure intelligence
+          </div>
+
+          <div className="mt-3 text-xs tracking-[0.34em] text-white/45">
+            Pressure • Flow • Telemetry • Analytics
+          </div>
         </div>
       </div>
 
-      {/* Telemetry anchor points */}
-      <div className="absolute left-[22%] top-[28%] h-2 w-2 rounded-full bg-cyan-400" />
-      <div className="absolute right-[24%] top-[34%] h-1.5 w-1.5 rounded-full bg-cyan-300" />
-      <div className="absolute left-[34%] bottom-[26%] h-1 w-1 rounded-full bg-cyan-200" />
-      <div className="absolute right-[36%] bottom-[22%] h-1.5 w-1.5 rounded-full bg-cyan-300" />
+      {/* Precision telemetry points */}
+      <div className="absolute left-[18%] top-[30%] h-2 w-2 rounded-full bg-cyan-400 shadow-[0_0_18px_rgba(34,211,238,0.9)]" />
+      <div className="absolute right-[22%] top-[36%] h-1.5 w-1.5 rounded-full bg-cyan-300 shadow-[0_0_14px_rgba(34,211,238,0.8)]" />
+      <div className="absolute left-[30%] bottom-[24%] h-1.5 w-1.5 rounded-full bg-cyan-300 shadow-[0_0_14px_rgba(34,211,238,0.8)]" />
+      <div className="absolute right-[34%] bottom-[18%] h-2 w-2 rounded-full bg-cyan-400 shadow-[0_0_18px_rgba(34,211,238,0.9)]" />
     </div>
   );
 });
