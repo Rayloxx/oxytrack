@@ -1,43 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-
-type Telemetry = {
-pressure: number;
-flow: number;
-purity: number;
-health: number;
-alerts: number;
-};
-
-function useTelemetry(): Telemetry {
-const [data, setData] = useState<Telemetry>({
-pressure: 4.18,
-flow: 182,
-purity: 99.6,
-health: 97.8,
-alerts: 1,
-});
-
-useEffect(() => {
-const interval = setInterval(() => {
-setData({
-pressure: Number((4.12 + Math.random() * 0.18).toFixed(2)),
-flow: Math.round(178 + Math.random() * 10),
-purity: Number((99.5 + Math.random() * 0.3).toFixed(1)),
-health: Number((97.4 + Math.random() * 1.0).toFixed(1)),
-alerts: Math.random() > 0.92 ? 2 : 1,
-});
-}, 1800);
-
-```
-return () => clearInterval(interval);
-```
-
-}, []);
-
-return data;
-}
+import { useTelemetrySync } from '@/components/network/TelemetrySync';
 
 function Metric({
 label,
@@ -66,12 +29,12 @@ return ( <div className='rounded-2xl border border-white/10 bg-white/[0.04] p-5 
 }
 
 export default function TelemetryHUD() {
-const telemetry = useTelemetry();
+const telemetry = useTelemetrySync();
 
 return ( <div className='pointer-events-none absolute inset-0'>
 {/* Top left */} <div className='absolute left-8 top-24 w-64'> <Metric
        label='Main line pressure'
-       value={telemetry.pressure}
+       value={telemetry.pressure.toFixed(2)}
        unit='bar'
      /> </div>
 
@@ -94,13 +57,13 @@ return ( <div className='pointer-events-none absolute inset-0'>
     <div className='mt-4 flex items-center justify-between'>
       <span className='text-white/70'>Infrastructure health</span>
       <span className='font-semibold text-white'>
-        {telemetry.health}%
+        {telemetry.health.toFixed(1)}%
       </span>
     </div>
 
     <div className='mt-3 h-2 overflow-hidden rounded-full bg-white/10'>
       <div
-        className='h-full rounded-full bg-gradient-to-r from-cyan-400 to-sky-400'
+        className='h-full rounded-full bg-gradient-to-r from-cyan-400 to-sky-400 transition-all duration-700'
         style={{ width: `${telemetry.health}%` }}
       />
     </div>
@@ -108,7 +71,15 @@ return ( <div className='pointer-events-none absolute inset-0'>
     <div className='mt-5 flex items-center justify-between'>
       <span className='text-white/70'>O₂ purity</span>
       <span className='font-semibold text-white'>
-        {telemetry.purity}%
+        {telemetry.purity.toFixed(1)}%
+      </span>
+    </div>
+
+    <div className='mt-5 flex items-center justify-between'>
+      <span className='text-white/70'>Telemetry phase</span>
+
+      <span className='font-semibold text-cyan-300 uppercase'>
+        {telemetry.phase}
       </span>
     </div>
   </div>
@@ -121,45 +92,56 @@ return ( <div className='pointer-events-none absolute inset-0'>
       </div>
 
       <div className='flex items-center gap-2'>
-        <div className='h-2 w-2 rounded-full bg-cyan-400 animate-pulse' />
-        <span className='text-xs text-cyan-300'>LIVE</span>
+        <div
+          className={`h-2 w-2 rounded-full ${
+            telemetry.phase === 'propagating'
+              ? 'bg-cyan-300'
+              : telemetry.phase === 'stabilizing'
+              ? 'bg-cyan-400'
+              : 'bg-cyan-500'
+          }`}
+        />
+
+        <span className='text-xs text-cyan-300 uppercase tracking-[0.2em]'>
+          {telemetry.phase}
+        </span>
       </div>
     </div>
 
     <div className='mt-5 grid grid-cols-2 gap-4'>
       <div>
         <div className='text-2xl font-semibold text-white'>6</div>
-        <div className='mt-1 text-xs text-white/50'>
-          Sensor nodes
-        </div>
+        <div className='mt-1 text-xs text-white/50'>Sensor nodes</div>
       </div>
 
       <div>
         <div className='text-2xl font-semibold text-white'>
-          {telemetry.alerts}
+          {telemetry.phase === 'propagating' ? 2 : 1}
         </div>
-        <div className='mt-1 text-xs text-white/50'>
-          Active alerts
-        </div>
+        <div className='mt-1 text-xs text-white/50'>Active alerts</div>
       </div>
 
       <div>
         <div className='text-2xl font-semibold text-white'>24/7</div>
-        <div className='mt-1 text-xs text-white/50'>
-          Monitoring
-        </div>
+        <div className='mt-1 text-xs text-white/50'>Monitoring</div>
       </div>
 
       <div>
         <div className='text-2xl font-semibold text-white'>MQTT</div>
-        <div className='mt-1 text-xs text-white/50'>
-          Telemetry
-        </div>
+        <div className='mt-1 text-xs text-white/50'>Telemetry</div>
+      </div>
+    </div>
+
+    <div className='mt-6 border-t border-white/10 pt-4'>
+      <div className='flex items-center justify-between text-sm'>
+        <span className='text-white/60'>Synchronization pulse</span>
+        <span className='font-mono text-cyan-300'>
+          #{telemetry.pulse}
+        </span>
       </div>
     </div>
   </div>
 </div>
-```
 
 );
 }
