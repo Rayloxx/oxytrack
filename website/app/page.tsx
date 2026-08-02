@@ -10,6 +10,7 @@ import MissionControlSection from '@/components/dashboard/MissionControlSection'
 import IntelligenceEngineSection from '@/components/intelligence/IntelligenceEngineSection';
 import HospitalTopologySection from '@/components/topology/HospitalTopologySection';
 import EconomicImpactSection from '@/components/economics/EconomicImpactSection';
+import CommandCenterSection from '@/components/command/CommandCenterSection';
 
 export default function HomePage() {
 const [bootComplete, setBootComplete] = useState(false);
@@ -36,6 +37,7 @@ return ( <main className='min-h-screen bg-[#020617] text-white overflow-hidden'>
 <IntelligenceEngineSection />
 <HospitalTopologySection />
 <EconomicImpactSection />
+<CommandCenterSection />
   </div>
 </main>
 
