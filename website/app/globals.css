@@ -450,3 +450,95 @@ body {
 .pressure-path-6 {
   animation-delay: 0.7s;
 }
+
+/* -------------------------------------------------------------------------- */
+/* Telemetry synchronization choreography */
+/* -------------------------------------------------------------------------- */
+
+@keyframes telemetryCorePulse {
+  0% {
+    transform: scale(0.6);
+    opacity: 0;
+    box-shadow: 0 0 0 rgba(34, 211, 238, 0);
+  }
+
+  20% {
+    transform: scale(1.2);
+    opacity: 1;
+    box-shadow: 0 0 24px rgba(34, 211, 238, 0.9);
+  }
+
+  100% {
+    transform: scale(2.6);
+    opacity: 0;
+    box-shadow: 0 0 72px rgba(34, 211, 238, 0);
+  }
+}
+
+@keyframes telemetryNodeRing {
+  0% {
+    transform: translate(-50%, -50%) scale(0.7);
+    opacity: 0;
+  }
+
+  25% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translate(-50%, -50%) scale(1.8);
+    opacity: 0;
+  }
+}
+
+@keyframes telemetryNodeWave {
+  0% {
+    transform: translate(-50%, -50%) scale(0.8);
+    opacity: 0;
+  }
+
+  30% {
+    opacity: 0.8;
+  }
+
+  100% {
+    transform: translate(-50%, -50%) scale(2.4);
+    opacity: 0;
+  }
+}
+
+@keyframes telemetryPathSweep {
+  0% {
+    stroke-dasharray: 700;
+    stroke-dashoffset: 700;
+    opacity: 0;
+  }
+
+  20% {
+    opacity: 1;
+  }
+
+  100% {
+    stroke-dasharray: 700;
+    stroke-dashoffset: 0;
+    opacity: 0;
+  }
+}
+
+.telemetry-core-pulse {
+  animation: telemetryCorePulse 2.8s ease-out infinite;
+}
+
+.telemetry-node-ring {
+  animation: telemetryNodeRing 2.2s ease-out infinite;
+}
+
+.telemetry-node-wave {
+  animation: telemetryNodeWave 2.6s ease-out infinite;
+}
+
+.telemetry-path-sweep {
+  stroke-dasharray: 700;
+  stroke-dashoffset: 700;
+  animation: telemetryPathSweep 1.8s ease-out infinite;
+}
