@@ -1,5 +1,6 @@
 'use client';
 
+import SectionContainer from '@/components/layout/SectionContainer';
 import { useTelemetrySync } from '@/components/network/TelemetrySync';
 
 export default function MissionControlSection() {
@@ -10,7 +11,7 @@ return ( <section
    className='relative overflow-hidden bg-[#020617] py-32'
  > <div className='absolute inset-0'> <div className='absolute left-1/2 top-1/2 h-[1000px] w-[1000px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-500/[0.04] blur-[220px]' /> </div>
 
-  <div className='relative z-10 mx-auto max-w-7xl px-8'>
+  <SectionContainer className='relative z-10'>
     <div className='max-w-3xl'>
       <div className='text-sm uppercase tracking-[0.35em] text-cyan-300'>
         Mission control
@@ -23,20 +24,19 @@ return ( <section
       <p className='mt-6 text-lg leading-8 text-white/65'>
         OxyTrack transforms distributed sensor telemetry into operational
         intelligence, giving biomedical engineers continuous visibility into
-        pressure stability, oxygen consumption, leak risk, and infrastructure
-        health across the entire medical gas network.
+        pressure stability, oxygen consumption, leak risk, and
+        infrastructure health across the entire medical gas network.
       </p>
     </div>
 
     <div className='mt-20 rounded-[36px] border border-white/10 bg-white/[0.03] p-8 backdrop-blur-2xl'>
-      {/* Dashboard header */}
       <div className='flex flex-col gap-6 border-b border-white/10 pb-6 md:flex-row md:items-center md:justify-between'>
         <div>
           <div className='text-sm uppercase tracking-[0.25em] text-cyan-300'>
             OxyTrack Mission Control
           </div>
           <div className='mt-2 text-2xl font-semibold text-white'>
-            Moi Teaching &amp; Referral Hospital
+            Moi Teaching & Referral Hospital
           </div>
         </div>
 
@@ -53,7 +53,6 @@ return ( <section
         </div>
       </div>
 
-      {/* KPI row */}
       <div className='mt-8 grid gap-6 md:grid-cols-4'>
         {[
           {
@@ -87,9 +86,7 @@ return ( <section
         ))}
       </div>
 
-      {/* Main dashboard */}
       <div className='mt-8 grid gap-8 lg:grid-cols-[1.25fr_0.75fr]'>
-        {/* Pressure trend */}
         <div className='rounded-[28px] border border-white/10 bg-[#071A35]/80 p-6'>
           <div className='flex items-center justify-between'>
             <div>
@@ -150,18 +147,14 @@ return ( <section
             </div>
 
             <div>
-              <div className='text-2xl font-semibold text-white'>
-                24 h
-              </div>
+              <div className='text-2xl font-semibold text-white'>24 h</div>
               <div className='text-sm text-white/50'>
                 Continuous monitoring
               </div>
             </div>
 
             <div>
-              <div className='text-2xl font-semibold text-white'>
-                0
-              </div>
+              <div className='text-2xl font-semibold text-white'>0</div>
               <div className='text-sm text-white/50'>
                 Critical pressure events
               </div>
@@ -169,7 +162,6 @@ return ( <section
           </div>
         </div>
 
-        {/* Alert panel */}
         <div className='rounded-[28px] border border-white/10 bg-[#071A35]/80 p-6'>
           <div className='text-sm uppercase tracking-[0.22em] text-cyan-300'>
             Active alerts
@@ -222,24 +214,20 @@ return ( <section
               <span className='text-white/60'>
                 Regulator inspection window
               </span>
-              <span className='font-medium text-white'>
-                14 days
-              </span>
+              <span className='font-medium text-white'>14 days</span>
             </div>
 
             <div className='mt-3 flex items-center justify-between'>
               <span className='text-white/60'>
                 Estimated leak probability
               </span>
-              <span className='font-medium text-cyan-300'>
-                Low
-              </span>
+              <span className='font-medium text-cyan-300'>Low</span>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
+  </SectionContainer>
 </section>
 
 );
