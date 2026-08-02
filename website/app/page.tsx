@@ -6,7 +6,6 @@ import HeroExperience from '@/components/hero/HeroExperience';
 import DataFlowSection from '@/components/architecture/DataFlowSection';
 import SensorPlatformSection from '@/components/platform/SensorPlatformSection';
 import MissionControlSection from '@/components/dashboard/MissionControlSection';
-import MissionControlSection from '@/components/dashboard/MissionControlSection';
 
 export default function HomePage() {
   const [bootComplete, setBootComplete] = useState(false);
