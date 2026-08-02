@@ -1,168 +1,219 @@
 'use client';
 
-import { Canvas } from '@react-three/fiber';
-import { OrbitControls, Environment } from '@react-three/drei';
+import { Canvas, useFrame } from '@react-three/fiber';
+import { Environment, Float } from '@react-three/drei';
 import { useMemo, useRef } from 'react';
 import * as THREE from 'three';
 
-function Pipeline({
-  start,
-  end,
+function Pipe({
+start,
+end,
 }: {
-  start: [number, number, number];
-  end: [number, number, number];
+start: [number, number, number];
+end: [number, number, number];
 }) {
-  const points = useMemo(
-    () => [new THREE.Vector3(...start), new THREE.Vector3(...end)],
-    [start, end]
-  );
+const curve = useMemo(() => {
+return new THREE.CatmullRomCurve3([
+new THREE.Vector3(...start),
+new THREE.Vector3(
+(start[0] + end[0]) * 0.5,
+start[1] * 0.6 + end[1] * 0.4,
+0
+),
+new THREE.Vector3(...end),
+]);
+}, [start, end]);
 
-  const curve = useMemo(() => new THREE.CatmullRomCurve3(points), [points]);
-
-  return (
-    <mesh>
-      <tubeGeometry args={[curve, 64, 0.04, 16, false]} />
-      <meshPhysicalMaterial
-        color="#67E8F9"
-        emissive="#0EA5E9"
-        emissiveIntensity={0.8}
-        roughness={0.05}
-        metalness={0.1}
-        transmission={0.9}
-        thickness={0.6}
-      />
-    </mesh>
-  );
+return ( <mesh>
+<tubeGeometry args={[curve, 80, 0.035, 24, false]} /> <meshPhysicalMaterial
+     color='#67E8F9'
+     emissive='#0EA5E9'
+     emissiveIntensity={0.9}
+     roughness={0.04}
+     metalness={0.12}
+     transmission={0.95}
+     thickness={0.8}
+   /> </mesh>
+);
 }
 
-function SensorNode({
-  position,
+function Sensor({
+position,
 }: {
-  position: [number, number, number];
+position: [number, number, number];
 }) {
-  return (
-    <group position={position}>
-      <mesh>
-        <sphereGeometry args={[0.08, 32, 32]} />
-        <meshStandardMaterial
-          color="#FFFFFF"
-          emissive="#22D3EE"
-          emissiveIntensity={1.5}
-        />
-      </mesh>
+const ring = useRef<THREE.Mesh>(null);
 
-      <mesh>
-        <torusGeometry args={[0.12, 0.01, 16, 64]} />
-        <meshStandardMaterial
-          color="#22D3EE"
-          emissive="#22D3EE"
-          emissiveIntensity={0.8}
-        />
-      </mesh>
-    </group>
-  );
+useFrame((state) => {
+if (!ring.current) return;
+ring.current.rotation.z = state.clock.elapsedTime * 0.35;
+});
+
+return ( <group position={position}> <mesh>
+<sphereGeometry args={[0.06, 32, 32]} /> <meshStandardMaterial
+       color='#FFFFFF'
+       emissive='#22D3EE'
+       emissiveIntensity={1.8}
+     /> </mesh>
+
+```
+  <mesh ref={ring}>
+    <torusGeometry args={[0.11, 0.008, 16, 64]} />
+    <meshStandardMaterial
+      color='#22D3EE'
+      emissive='#22D3EE'
+      emissiveIntensity={1.2}
+    />
+  </mesh>
+</group>
+```
+
+);
+}
+
+function OxygenFlow() {
+const points = useRef<THREE.Points>(null);
+
+const positions = useMemo(() => {
+const array = new Float32Array(800 * 3);
+
+```
+for (let i = 0; i < 800; i++) {
+  array[i * 3] = (Math.random() - 0.5) * 3.5;
+  array[i * 3 + 1] = (Math.random() - 0.5) * 2.2;
+  array[i * 3 + 2] = (Math.random() - 0.5) * 0.6;
+}
+
+return array;
+```
+
+}, []);
+
+useFrame((state) => {
+if (!points.current) return;
+
+```
+points.current.rotation.z = state.clock.elapsedTime * 0.04;
+```
+
+});
+
+return ( <points ref={points}> <bufferGeometry> <bufferAttribute
+       attach='attributes-position'
+       count={800}
+       array={positions}
+       itemSize={3}
+     /> </bufferGeometry>
+
+```
+  <pointsMaterial
+    color='#A5F3FC'
+    size={0.018}
+    transparent
+    opacity={0.75}
+  />
+</points>
+```
+
+);
+}
+
+function PressureHalo() {
+const halo = useRef<THREE.Mesh>(null);
+
+useFrame((state) => {
+if (!halo.current) return;
+
+```
+const s = 1 + Math.sin(state.clock.elapsedTime * 1.8) * 0.08;
+halo.current.scale.set(s, s, s);
+```
+
+});
+
+return ( <mesh ref={halo}>
+<ringGeometry args={[0.26, 0.29, 64]} /> <meshBasicMaterial color='#22D3EE' transparent opacity={0.4} /> </mesh>
+);
 }
 
 function Manifold() {
-  return (
-    <group>
-      <mesh>
-        <cylinderGeometry args={[0.18, 0.18, 0.5, 48]} />
-        <meshPhysicalMaterial
-          color="#E5E7EB"
-          metalness={0.9}
-          roughness={0.12}
-        />
-      </mesh>
+return ( <group> <mesh>
+<cylinderGeometry args={[0.16, 0.16, 0.42, 48]} /> <meshPhysicalMaterial
+       color='#E5E7EB'
+       metalness={0.92}
+       roughness={0.08}
+     /> </mesh>
 
-      <mesh>
-        <sphereGeometry args={[0.1, 32, 32]} />
-        <meshStandardMaterial
-          color="#22D3EE"
-          emissive="#22D3EE"
-          emissiveIntensity={2}
-        />
-      </mesh>
-    </group>
-  );
+```
+  <mesh>
+    <sphereGeometry args={[0.08, 32, 32]} />
+    <meshStandardMaterial
+      color='#22D3EE'
+      emissive='#22D3EE'
+      emissiveIntensity={2.2}
+    />
+  </mesh>
+
+  <PressureHalo />
+</group>
+```
+
+);
 }
 
-function OxygenParticles() {
-  const points = useMemo(() => {
-    const positions = new Float32Array(300 * 3);
+function Scene() {
+return ( <Float speed={0.8} rotationIntensity={0.15} floatIntensity={0.12}> <group> <Manifold />
 
-    for (let i = 0; i < 300; i++) {
-      positions[i * 3] = (Math.random() - 0.5) * 4;
-      positions[i * 3 + 1] = (Math.random() - 0.5) * 4;
-      positions[i * 3 + 2] = (Math.random() - 0.5) * 4;
-    }
+```
+    <Pipe start={[0, 0, 0]} end={[1.25, 0.75, 0]} />
+    <Pipe start={[0, 0, 0]} end={[1.25, -0.75, 0]} />
+    <Pipe start={[0, 0, 0]} end={[-1.25, 0.75, 0]} />
+    <Pipe start={[0, 0, 0]} end={[-1.25, -0.75, 0]} />
+    <Pipe start={[0, 0, 0]} end={[1.9, 0, 0]} />
+    <Pipe start={[0, 0, 0]} end={[-1.9, 0, 0]} />
 
-    return positions;
-  }, []);
+    <Sensor position={[1.25, 0.75, 0]} />
+    <Sensor position={[1.25, -0.75, 0]} />
+    <Sensor position={[-1.25, 0.75, 0]} />
+    <Sensor position={[-1.25, -0.75, 0]} />
+    <Sensor position={[1.9, 0, 0]} />
+    <Sensor position={[-1.9, 0, 0]} />
 
-  return (
-    <points>
-      <bufferGeometry>
-        <bufferAttribute
-          attach="attributes-position"
-          count={300}
-          array={points}
-          itemSize={3}
-        />
-      </bufferGeometry>
+    <OxygenFlow />
+  </group>
+</Float>
+```
 
-      <pointsMaterial
-        color="#67E8F9"
-        size={0.02}
-        transparent
-        opacity={0.7}
-      />
-    </points>
-  );
+);
 }
 
 export default function OxygenNetwork3D() {
-  return (
-    <div className="h-[720px] w-full">
-      <Canvas
-        camera={{ position: [0, 0, 3.6], fov: 38 }}
-        gl={{ antialias: true, alpha: true }}
-      >
-        <color attach="background" args={["#020617"]} />
+return ( <div className='h-[680px] w-full'>
+<Canvas
+camera={{ position: [0, 0, 4.2], fov: 34 }}
+gl={{ antialias: true, alpha: true }}
+>
+<color attach='background' args={['#020617']} />
 
-        <ambientLight intensity={0.35} />
-        <pointLight position={[3, 3, 3]} intensity={2.4} color="#67E8F9" />
-        <pointLight position={[-3, -2, 2]} intensity={1.2} color="#0EA5E9" />
+```
+    <ambientLight intensity={0.35} />
+    <pointLight
+      position={[3, 3, 3]}
+      intensity={2.6}
+      color='#67E8F9'
+    />
+    <pointLight
+      position={[-3, -2, 2]}
+      intensity={1.3}
+      color='#0EA5E9'
+    />
 
-        <Environment preset="city" />
+    <Environment preset='city' />
 
-        <group>
-          <Manifold />
+    <Scene />
+  </Canvas>
+</div>
+```
 
-          <Pipeline start={[0, 0, 0]} end={[1.2, 0.9, 0]} />
-          <Pipeline start={[0, 0, 0]} end={[1.2, -0.9, 0]} />
-          <Pipeline start={[0, 0, 0]} end={[-1.2, 0.9, 0]} />
-          <Pipeline start={[0, 0, 0]} end={[-1.2, -0.9, 0]} />
-          <Pipeline start={[0, 0, 0]} end={[1.8, 0, 0]} />
-          <Pipeline start={[0, 0, 0]} end={[-1.8, 0, 0]} />
-
-          <SensorNode position={[1.2, 0.9, 0]} />
-          <SensorNode position={[1.2, -0.9, 0]} />
-          <SensorNode position={[-1.2, 0.9, 0]} />
-          <SensorNode position={[-1.2, -0.9, 0]} />
-          <SensorNode position={[1.8, 0, 0]} />
-          <SensorNode position={[-1.8, 0, 0]} />
-        </group>
-
-        <OxygenParticles />
-
-        <OrbitControls
-          enableZoom={false}
-          enablePan={false}
-          autoRotate
-          autoRotateSpeed={0.25}
-        />
-      </Canvas>
-    </div>
-  );
+);
 }
