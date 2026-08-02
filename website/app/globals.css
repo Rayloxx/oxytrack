@@ -1,3 +1,157 @@
+@import "tailwindcss";
+
+/* -------------------------------------------------------------------------- */
+/* Global theme */
+/* -------------------------------------------------------------------------- */
+
+:root {
+  --background: #020617;
+  --foreground: #f8fafc;
+
+  --cyan-100: #ecfeff;
+  --cyan-200: #cffafe;
+  --cyan-300: #a5f3fc;
+  --cyan-400: #67e8f9;
+  --cyan-500: #22d3ee;
+  --cyan-600: #06b6d4;
+
+  --blue-700: #0369a1;
+}
+
+html,
+body {
+  background: var(--background);
+  color: var(--foreground);
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+::selection {
+  background: rgba(34, 211, 238, 0.2);
+  color: white;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Cinematic utilities */
+/* -------------------------------------------------------------------------- */
+
+.glass-panel {
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(18px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.text-gradient {
+  background: linear-gradient(
+    90deg,
+    #ffffff 0%,
+    #e6fbff 45%,
+    #67e8f9 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.cyan-glow {
+  box-shadow:
+    0 0 24px rgba(34, 211, 238, 0.18),
+    0 0 64px rgba(14, 165, 233, 0.12);
+}
+
+/* -------------------------------------------------------------------------- */
+/* Pressure pulse animations */
+/* -------------------------------------------------------------------------- */
+
+@keyframes pressure-wave {
+  0% {
+    transform: scale(0.15);
+    opacity: 0;
+  }
+
+  12% {
+    opacity: 1;
+  }
+
+  40% {
+    opacity: 0.55;
+  }
+
+  100% {
+    transform: scale(10);
+    opacity: 0;
+  }
+}
+
+@keyframes pressure-core {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+
+  20% {
+    transform: scale(1);
+    opacity: 0.85;
+  }
+
+  100% {
+    transform: scale(2.8);
+    opacity: 0;
+  }
+}
+
+@keyframes pressure-rays {
+  0% {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+
+  25% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1.06);
+  }
+}
+
+.pulse-wave {
+  animation: pressure-wave 2.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.pulse-wave-1 {
+  animation-delay: 0s;
+}
+
+.pulse-wave-2 {
+  animation-delay: 0.18s;
+}
+
+.pulse-wave-3 {
+  animation-delay: 0.36s;
+}
+
+.pulse-core {
+  animation: pressure-core 1.4s ease-out forwards;
+}
+
+.pulse-rays {
+  animation: pressure-rays 1.8s ease-out forwards;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Network activation animations */
+/* -------------------------------------------------------------------------- */
+
 @keyframes networkActivate {
   0% {
     stroke-dasharray: 1200;
@@ -41,6 +195,18 @@
   animation-delay: 0.95s;
 }
 
+@keyframes sensorFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.82);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
 .sensor-node {
   opacity: 0;
   animation: sensorFadeIn 0.8s ease-out forwards;
@@ -65,14 +231,117 @@
   animation-delay: 1.9s;
 }
 
-@keyframes sensorFadeIn {
-  from {
-    opacity: 0;
-    transform: scale(0.85);
+/* -------------------------------------------------------------------------- */
+/* Oxygen ambient animations */
+/* -------------------------------------------------------------------------- */
+
+@keyframes ambientDriftOne {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
   }
 
-  to {
-    opacity: 1;
-    transform: scale(1);
+  50% {
+    transform: translate(-48%, -52%) scale(1.08);
   }
+
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes ambientDriftTwo {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  50% {
+    transform: translate(24px, -18px) scale(1.06);
+  }
+
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+}
+
+@keyframes ambientDriftThree {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  50% {
+    transform: translate(-20px, 16px) scale(1.04);
+  }
+
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+}
+
+@keyframes ambientParticle {
+  0% {
+    transform: translateY(0) scale(0.75);
+    opacity: 0;
+  }
+
+  15% {
+    opacity: 0.8;
+  }
+
+  50% {
+    transform: translateY(-28px) scale(1);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(-72px) scale(0.85);
+    opacity: 0;
+  }
+}
+
+.ambient-orb-1 {
+  animation: ambientDriftOne 18s ease-in-out infinite;
+}
+
+.ambient-orb-2 {
+  animation: ambientDriftTwo 24s ease-in-out infinite;
+}
+
+.ambient-orb-3 {
+  animation: ambientDriftThree 20s ease-in-out infinite;
+}
+
+.ambient-particle {
+  animation: ambientParticle 8s ease-in-out infinite;
+}
+
+.ambient-particle-1 {
+  animation-duration: 7.4s;
+}
+.ambient-particle-2 {
+  animation-duration: 8.1s;
+}
+.ambient-particle-3 {
+  animation-duration: 8.9s;
+}
+.ambient-particle-4 {
+  animation-duration: 7.7s;
+}
+.ambient-particle-5 {
+  animation-duration: 8.5s;
+}
+.ambient-particle-6 {
+  animation-duration: 9.3s;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Performance */
+/* -------------------------------------------------------------------------- */
+
+.gpu-layer {
+  transform: translateZ(0);
+  will-change: transform, opacity;
+}
+
+.fade-mask {
+  mask-image: radial-gradient(circle, white 55%, transparent 100%);
 }
