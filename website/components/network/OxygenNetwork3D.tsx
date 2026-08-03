@@ -6,58 +6,17 @@ motion,
 useMotionValue,
 useSpring,
 useTransform,
+useScroll,
 } from 'framer-motion';
 import { useMotionTimeline } from '@/components/cinematic/MotionTimeline';
 
 const branches = [
-{
-id: 'ICU',
-label: 'Intensive Care',
-x: '84%',
-y: '18%',
-pressure: '4.21',
-flow: '46',
-},
-{
-id: 'THEATRE',
-label: 'Operating Theatre',
-x: '88%',
-y: '74%',
-pressure: '4.18',
-flow: '38',
-},
-{
-id: 'HDU',
-label: 'High Dependency',
-x: '94%',
-y: '46%',
-pressure: '4.16',
-flow: '29',
-},
-{
-id: 'ER',
-label: 'Emergency',
-x: '12%',
-y: '18%',
-pressure: '4.19',
-flow: '31',
-},
-{
-id: 'NICU',
-label: 'Neonatal ICU',
-x: '10%',
-y: '78%',
-pressure: '4.15',
-flow: '18',
-},
-{
-id: 'WARDS',
-label: 'General Wards',
-x: '6%',
-y: '46%',
-pressure: '4.12',
-flow: '20',
-},
+{ id: 'ICU', x: '84%', y: '18%', pressure: '4.21', flow: '46' },
+{ id: 'THEATRE', x: '88%', y: '74%', pressure: '4.18', flow: '38' },
+{ id: 'HDU', x: '94%', y: '46%', pressure: '4.16', flow: '29' },
+{ id: 'ER', x: '12%', y: '18%', pressure: '4.19', flow: '31' },
+{ id: 'NICU', x: '10%', y: '78%', pressure: '4.15', flow: '18' },
+{ id: 'WARDS', x: '6%', y: '46%', pressure: '4.12', flow: '20' },
 ];
 
 const conduitPaths = [
@@ -91,17 +50,39 @@ damping: 20,
 const glowX = useTransform(mouseX, [-0.5, 0.5], ['35%', '65%']);
 const glowY = useTransform(mouseY, [-0.5, 0.5], ['35%', '65%']);
 
+const { scrollYProgress } = useScroll();
+
+const networkScale = useSpring(
+useTransform(scrollYProgress, [0, 0.22], [1, 1.18]),
+{
+stiffness: 120,
+damping: 24,
+}
+);
+
+const networkY = useSpring(
+useTransform(scrollYProgress, [0, 0.22], [0, 120]),
+{
+stiffness: 120,
+damping: 24,
+}
+);
+
+const networkOpacity = useTransform(
+scrollYProgress,
+[0, 0.18, 0.28],
+[1, 0.96, 0.9]
+);
+
 function handlePointerMove(e: React.PointerEvent<HTMLDivElement>) {
 const rect = containerRef.current?.getBoundingClientRect();
 if (!rect) return;
 
-```
 const x = (e.clientX - rect.left) / rect.width - 0.5;
 const y = (e.clientY - rect.top) / rect.height - 0.5;
 
 mouseX.set(x);
 mouseY.set(y);
-```
 
 }
 
@@ -122,8 +103,7 @@ rotateX,
 rotateY,
 transformStyle: 'preserve-3d',
 }}
->
-{/* Background */} <div className='absolute inset-0'>
+> <div className='absolute inset-0'>
 <motion.div
 className='absolute h-[720px] w-[720px] rounded-full bg-cyan-400/12 blur-[180px]'
 style={{
@@ -141,14 +121,15 @@ y: '-50%',
     </div>
   </div>
 
-  {/* Network layer */}
   <motion.div
     className='absolute inset-0'
     style={{
       transform: 'translateZ(40px)',
+      scale: networkScale,
+      y: networkY,
+      opacity: networkOpacity,
     }}
   >
-    {/* Volumetric conduit network */}
     <svg
       className='absolute inset-0 h-full w-full'
       viewBox='0 0 1000 700'
@@ -176,7 +157,6 @@ y: '-50%',
 
       {conduitPaths.map((path, index) => (
         <g key={index}>
-          {/* Outer pipe shell */}
           <motion.path
             d={path}
             stroke='rgba(34,211,238,0.12)'
@@ -191,7 +171,6 @@ y: '-50%',
             }}
           />
 
-          {/* Inner oxygen core */}
           <motion.path
             d={path}
             stroke='url(#conduitGlow)'
@@ -209,7 +188,6 @@ y: '-50%',
         </g>
       ))}
 
-      {/* Main trunk */}
       <g>
         <motion.path
           d='M500 120 L500 580'
@@ -231,10 +209,26 @@ y: '-50%',
           animate={{ pathLength: active ? 1 : 0 }}
           transition={{ duration: 1.4, delay: 0.15 }}
         />
+
+        <motion.path
+          d='M500 120 L500 580'
+          stroke='#A5F3FC'
+          strokeWidth='2'
+          strokeLinecap='round'
+          strokeDasharray='12 18'
+          animate={{
+            strokeDashoffset: [30, -30],
+            opacity: [0.15, 0.8, 0.15],
+          }}
+          transition={{
+            duration: 2,
+            repeat: Infinity,
+            ease: 'linear',
+          }}
+        />
       </g>
     </svg>
 
-    {/* Central manifold */}
     <motion.div
       className='absolute left-1/2 top-1/2 z-10 h-24 w-24 -translate-x-1/2 -translate-y-1/2 rounded-[28px] border border-cyan-400/30 bg-cyan-500/15'
       animate={{
@@ -268,7 +262,6 @@ y: '-50%',
       </div>
     </motion.div>
 
-    {/* Pressure wave rings */}
     {[1, 2, 3].map((ring) => (
       <motion.div
         key={ring}
@@ -290,7 +283,6 @@ y: '-50%',
       />
     ))}
 
-    {/* Branch telemetry capsules */}
     {branches.map((branch, index) => (
       <motion.div
         key={branch.id}
@@ -341,7 +333,6 @@ y: '-50%',
       </motion.div>
     ))}
 
-    {/* Oxygen packet propagation */}
     {active && (
       <>
         {Array.from({ length: 10 }).map((_, i) => (
@@ -383,16 +374,33 @@ y: '-50%',
         ))}
       </>
     )}
+
+    <motion.div
+      className='absolute bottom-28 left-1/2 -translate-x-1/2'
+      animate={{
+        y: [0, 10, 0],
+        opacity: [0.3, 0.8, 0.3],
+      }}
+      transition={{
+        duration: 2.2,
+        repeat: Infinity,
+      }}
+    >
+      <div className='flex flex-col items-center gap-2 text-cyan-300'>
+        <div className='h-10 w-px bg-gradient-to-b from-cyan-300 to-transparent' />
+        <span className='text-[10px] uppercase tracking-[0.3em]'>
+          Network continues
+        </span>
+      </div>
+    </motion.div>
   </motion.div>
 
-  {/* HUD layer */}
   <motion.div
     className='absolute inset-0 z-30'
     style={{
       transform: 'translateZ(80px)',
     }}
   >
-    {/* Bottom telemetry strip */}
     <motion.div
       className='absolute bottom-6 left-6 right-6 rounded-2xl border border-white/10 bg-[#071A35]/80 px-6 py-5 backdrop-blur-xl'
       initial={{ opacity: 0, y: 24 }}
