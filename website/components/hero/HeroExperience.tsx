@@ -1,22 +1,49 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import CameraDirector from '@/components/cinematic/CameraDirector';
 import OxygenNetwork3D from '@/components/network/OxygenNetwork3D';
 
 export default function HeroExperience() {
+const { scrollYProgress } = useScroll();
+
+const heroScale = useTransform(scrollYProgress, [0, 0.18], [1, 0.96]);
+const heroY = useTransform(scrollYProgress, [0, 0.18], [0, -40]);
+const heroOpacity = useTransform(scrollYProgress, [0, 0.22], [1, 0.92]);
+
+const glowScale = useTransform(scrollYProgress, [0, 0.2], [1, 1.08]);
+const glowOpacity = useTransform(scrollYProgress, [0, 0.2], [0.08, 0.04]);
+
 return ( <section
-  id='hero'
-  className='relative min-h-screen overflow-hidden bg-[#020617]'
->
-{/* Background */} <div className='absolute inset-0'> <div className='absolute left-1/2 top-0 h-[900px] w-[900px] -translate-x-1/2 rounded-full bg-cyan-500/[0.08] blur-[220px]' /> <div className='absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(34,211,238,0.06)_0%,transparent_60%)]' /> </div>
+   id='hero'
+   className='relative min-h-screen overflow-hidden bg-[#020617]'
+ >
+{/* Background */} <div className='absolute inset-0'>
+<motion.div
+className='absolute left-1/2 top-0 h-[900px] w-[900px] -translate-x-1/2 rounded-full bg-cyan-500/[0.08] blur-[220px]'
+style={{
+scale: glowScale,
+opacity: glowOpacity,
+}}
+/>
+
+    <div className='absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(34,211,238,0.06)_0%,transparent_60%)]' />
+  </div>
 
   {/* Grid texture */}
   <div className='absolute inset-0 opacity-[0.08]'>
     <div className='absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.04)_1px,transparent_1px)] bg-[size:64px_64px]' />
   </div>
 
-  <div className='relative z-10 mx-auto flex min-h-screen max-w-7xl items-center px-8 py-24'>
+  {/* Cinematic camera layer */}
+  <motion.div
+    className='relative z-10 mx-auto flex min-h-screen max-w-7xl items-center px-8 py-24'
+    style={{
+      scale: heroScale,
+      y: heroY,
+      opacity: heroOpacity,
+    }}
+  >
     <div className='grid w-full items-center gap-16 lg:grid-cols-[0.45fr_0.55fr]'>
       {/* Left narrative */}
       <div>
@@ -132,11 +159,25 @@ return ( <section
         transition={{ duration: 1.1, delay: 0.25 }}
         className='relative h-[760px]'
       >
-        <div className='absolute inset-0 rounded-[40px] border border-white/10 bg-white/[0.03] backdrop-blur-xl overflow-hidden shadow-[0_0_80px_rgba(34,211,238,0.08)]'>
+        <motion.div
+          className='absolute inset-0 overflow-hidden rounded-[40px] border border-white/10 bg-white/[0.03] backdrop-blur-xl shadow-[0_0_80px_rgba(34,211,238,0.08)]'
+          animate={{
+            boxShadow: [
+              '0 0 60px rgba(34,211,238,0.05)',
+              '0 0 90px rgba(34,211,238,0.12)',
+              '0 0 60px rgba(34,211,238,0.05)',
+            ],
+          }}
+          transition={{
+            duration: 4,
+            repeat: Infinity,
+            ease: 'easeInOut',
+          }}
+        >
           <CameraDirector>
             <OxygenNetwork3D />
           </CameraDirector>
-        </div>
+        </motion.div>
 
         {/* Floating telemetry card */}
         <motion.div
@@ -172,7 +213,27 @@ return ( <section
         </motion.div>
       </motion.div>
     </div>
-  </div>
+  </motion.div>
+
+  {/* Cinematic transition cue */}
+  <motion.div
+    className='absolute bottom-10 left-1/2 z-20 -translate-x-1/2'
+    animate={{
+      y: [0, 12, 0],
+      opacity: [0.3, 0.8, 0.3],
+    }}
+    transition={{
+      duration: 2.2,
+      repeat: Infinity,
+    }}
+  >
+    <div className='flex flex-col items-center gap-2 text-cyan-300'>
+      <div className='h-10 w-px bg-gradient-to-b from-cyan-300 to-transparent' />
+      <span className='text-[10px] uppercase tracking-[0.3em]'>
+        Infrastructure continues
+      </span>
+    </div>
+  </motion.div>
 </section>
 
 );
