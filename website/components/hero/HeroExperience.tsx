@@ -5,7 +5,10 @@ import CameraDirector from '@/components/cinematic/CameraDirector';
 import OxygenNetwork3D from '@/components/network/OxygenNetwork3D';
 
 export default function HeroExperience() {
-return ( <section className='relative min-h-screen overflow-hidden bg-[#020617]'>
+return ( <section
+  id='hero'
+  className='relative min-h-screen overflow-hidden bg-[#020617]'
+>
 {/* Background */} <div className='absolute inset-0'> <div className='absolute left-1/2 top-0 h-[900px] w-[900px] -translate-x-1/2 rounded-full bg-cyan-500/[0.08] blur-[220px]' /> <div className='absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(34,211,238,0.06)_0%,transparent_60%)]' /> </div>
 
   {/* Grid texture */}
