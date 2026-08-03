@@ -12,7 +12,7 @@ const command = timeline.phase === 'command';
 
 const intensity = command ? 1 : platform ? 0.75 : architecture ? 0.55 : 0.35;
 
-return ( <div className='pointer-events-none fixed inset-0 z-[1] overflow-hidden'>
+return ( <div className='pointer-events-none fixed inset-0 z-[2] overflow-hidden'>
 {/* Main telemetry spine */}
 <motion.div
 className='absolute left-1/2 top-0 h-full w-px -translate-x-1/2 bg-gradient-to-b from-cyan-300/40 via-cyan-300/70 to-cyan-300/20'
