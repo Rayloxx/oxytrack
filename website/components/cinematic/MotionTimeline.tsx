@@ -8,7 +8,7 @@ useMemo,
 useState,
 } from 'react';
 
-type MotionPhase =
+export type MotionPhase =
 | 'boot'
 | 'hero'
 | 'bridge'
@@ -57,7 +57,9 @@ const observer = new IntersectionObserver(
 
 sections.forEach((section) => {
   const element = document.getElementById(section.id);
-  if (element) observer.observe(element);
+  if (element) {
+    observer.observe(element);
+  }
 });
 
 return () => observer.disconnect();
