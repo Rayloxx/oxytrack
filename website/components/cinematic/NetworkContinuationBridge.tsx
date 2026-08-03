@@ -1,8 +1,12 @@
 'use client';
 
 import { motion, useScroll, useTransform } from 'framer-motion';
+import { useMotionTimeline } from '@/components/cinematic/MotionTimeline';
 
 export default function NetworkContinuationBridge() {
+const timeline = useMotionTimeline();
+const architectureActive = timeline.phase === 'architecture';
+
 const { scrollYProgress } = useScroll();
 
 const scaleY = useTransform(scrollYProgress, [0, 0.15], [0.7, 1.4]);
@@ -33,20 +37,20 @@ style={{ scaleY, opacity }}
     }}
   />
 
-  {/* Energy packets */}
+  {/* Synchronized oxygen packets */}
   {Array.from({ length: 8 }).map((_, i) => (
     <motion.div
       key={i}
       className='absolute left-1/2 h-2 w-2 -translate-x-1/2 rounded-full bg-cyan-300'
       initial={{ top: '-5%' }}
       animate={{
-        top: ['-5%', '105%'],
-        opacity: [0, 1, 1, 0],
+        top: architectureActive ? ['-5%', '105%'] : ['-5%', '40%'],
+        opacity: architectureActive ? [0, 1, 1, 0] : [0, 0.4, 0],
       }}
       transition={{
-        duration: 2.2,
+        duration: architectureActive ? 1.6 : 2.8,
         repeat: Infinity,
-        delay: i * 0.28,
+        delay: i * 0.22,
         ease: 'linear',
       }}
     />
@@ -71,7 +75,10 @@ style={{ scaleY, opacity }}
       strokeWidth='4'
       strokeLinecap='round'
       initial={{ pathLength: 0 }}
-      animate={{ pathLength: 1 }}
+      animate={{
+        pathLength: 1,
+        opacity: architectureActive ? 1 : 0.7,
+      }}
       transition={{ duration: 1.4 }}
     />
 
@@ -81,7 +88,10 @@ style={{ scaleY, opacity }}
       strokeWidth='4'
       strokeLinecap='round'
       initial={{ pathLength: 0 }}
-      animate={{ pathLength: 1 }}
+      animate={{
+        pathLength: 1,
+        opacity: architectureActive ? 1 : 0.7,
+      }}
       transition={{ duration: 1.4, delay: 0.15 }}
     />
   </motion.svg>
