@@ -26,7 +26,7 @@ const [bootComplete, setBootComplete] = useState(false);
 return ( <MotionTimelineProvider> <main className='relative min-h-screen overflow-hidden bg-[#020617] text-white'>
 {/* Development diagnostics */} <BuildDiagnostics />
 
-    {/* Global cinematic background */}
+    {/* Global cinematic atmosphere */}
     <GlobalNetworkField />
 
     {/* Global telemetry pulse bus */}
@@ -43,7 +43,7 @@ return ( <MotionTimelineProvider> <main className='relative min-h-screen overflo
         bootComplete ? 'opacity-100' : 'opacity-0'
       }`}
     >
-      {/* Hero */}
+      {/* Hero experience */}
       <HeroExperience />
 
       {/* Hero → Architecture bridge */}
