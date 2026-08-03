@@ -8,75 +8,63 @@ useMemo,
 useState,
 } from 'react';
 
-type Phase =
+type MotionPhase =
 | 'boot'
-| 'logo'
-| 'ignition'
-| 'network'
-| 'telemetry'
-| 'dashboard'
-| 'ready';
+| 'hero'
+| 'bridge'
+| 'architecture'
+| 'platform'
+| 'command';
 
-type TimelineState = {
-phase: Phase;
-progress: number;
+type MotionTimelineContextType = {
+phase: MotionPhase;
 };
 
-const MotionTimelineContext = createContext<TimelineState>({
-phase: 'boot',
-progress: 0,
-});
+const MotionTimelineContext =
+createContext<MotionTimelineContextType | null>(null);
 
 export function MotionTimelineProvider({
 children,
 }: {
 children: React.ReactNode;
 }) {
-const [state, setState] = useState<TimelineState>({
-phase: 'boot',
-progress: 0,
-});
+const [phase, setPhase] = useState<MotionPhase>('hero');
 
 useEffect(() => {
-const sequence = [
-{ phase: 'boot', duration: 700 },
-{ phase: 'logo', duration: 900 },
-{ phase: 'ignition', duration: 900 },
-{ phase: 'network', duration: 1000 },
-{ phase: 'telemetry', duration: 1000 },
-{ phase: 'dashboard', duration: 900 },
-{ phase: 'ready', duration: 0 },
-] as const;
+const sections = [
+{ id: 'hero', phase: 'hero' as MotionPhase },
+{ id: 'architecture', phase: 'architecture' as MotionPhase },
+{ id: 'platform', phase: 'platform' as MotionPhase },
+{ id: 'technology', phase: 'command' as MotionPhase },
+];
 
-let index = 0;
-let cancelled = false;
-
-function advance() {
-  if (cancelled || index >= sequence.length) return;
-
-  const current = sequence[index];
-
-  setState({
-    phase: current.phase,
-    progress: index / (sequence.length - 1),
-  });
-
-  index += 1;
-
-  if (current.duration > 0) {
-    setTimeout(advance, current.duration);
+const observer = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        const section = sections.find((s) => s.id === entry.target.id);
+        if (section) {
+          setPhase(section.phase);
+        }
+      }
+    });
+  },
+  {
+    threshold: 0.35,
+    rootMargin: '-10% 0px -30% 0px',
   }
-}
+);
 
-advance();
+sections.forEach((section) => {
+  const element = document.getElementById(section.id);
+  if (element) observer.observe(element);
+});
 
-return () => {
-  cancelled = true;
-};
+return () => observer.disconnect();
 
 }, []);
 
-const value = useMemo(() => state, [state]);
+const value = useMemo(() => ({ phase }), [phase]);
 
 return (
 <MotionTimelineContext.Provider value={value}>
@@ -86,5 +74,13 @@ return (
 }
 
 export function useMotionTimeline() {
-return useContext(MotionTimelineContext);
+const context = useContext(MotionTimelineContext);
+
+if (!context) {
+throw new Error(
+'useMotionTimeline must be used within MotionTimelineProvider'
+);
+}
+
+return context;
 }
