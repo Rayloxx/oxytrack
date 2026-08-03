@@ -5,6 +5,7 @@ import SectionContainer from '@/components/layout/SectionContainer';
 import CinematicReveal from '@/components/cinematic/CinematicReveal';
 import { useTelemetrySync } from '@/components/network/TelemetrySync';
 import { useMotionTimeline } from '@/components/cinematic/MotionTimeline';
+import { SECTION_IDS } from '@/lib/sectionRegistry';
 
 export default function MissionControlSection() {
 const telemetry = useTelemetrySync();
@@ -12,15 +13,16 @@ const timeline = useMotionTimeline();
 const commandActive = timeline.phase === 'command';
 
 return ( <section
-   id='technology'
+   id={SECTION_IDS.technology}
    className='relative overflow-hidden bg-[#020617] py-32'
- > <div className='absolute inset-0'>
+ >
+{/* Ambient command glow */} <div className='absolute inset-0'>
 <motion.div
 className='absolute left-1/2 top-1/2 h-[1000px] w-[1000px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-500/[0.04] blur-[220px]'
 animate={
 commandActive
 ? {
-scale: [1, 1.06, 1],
+scale: [1, 1.08, 1],
 opacity: [0.03, 0.07, 0.03],
 }
 : {}
@@ -33,6 +35,7 @@ ease: 'easeInOut',
 /> </div>
 
   <SectionContainer className='relative z-10'>
+    {/* Section heading */}
     <CinematicReveal>
       <div className='max-w-3xl'>
         <div className='text-sm uppercase tracking-[0.35em] text-cyan-300'>
@@ -52,6 +55,7 @@ ease: 'easeInOut',
       </div>
     </CinematicReveal>
 
+    {/* Command dashboard */}
     <CinematicReveal delay={0.2}>
       <motion.div
         className='mt-20 rounded-[36px] border border-white/10 bg-white/[0.03] p-8 backdrop-blur-2xl'
