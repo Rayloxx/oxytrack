@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import SectionContainer from '@/components/layout/SectionContainer';
 import CinematicReveal from '@/components/cinematic/CinematicReveal';
 import { useMotionTimeline } from '@/components/cinematic/MotionTimeline';
+import { SECTION_IDS } from '@/lib/sectionRegistry';
 
 const features = [
 {
@@ -37,13 +38,31 @@ const timeline = useMotionTimeline();
 const platformActive = timeline.phase === 'platform';
 
 return ( <section
-   id='platform'
+   id={SECTION_IDS.platform}
    className='relative overflow-hidden bg-[#030712] py-32'
- > <div className='absolute inset-0'> <div className='absolute left-1/2 top-1/2 h-[900px] w-[900px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-500/[0.05] blur-[180px]' /> </div>
+ >
+{/* Ambient background */} <div className='absolute inset-0'>
+<motion.div
+className='absolute left-1/2 top-1/2 h-[900px] w-[900px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-500/[0.05] blur-[180px]'
+animate={
+platformActive
+? {
+scale: [1, 1.08, 1],
+opacity: [0.04, 0.08, 0.04],
+}
+: {}
+}
+transition={{
+duration: 6,
+repeat: Infinity,
+ease: 'easeInOut',
+}}
+/> </div>
 
   <SectionContainer className='relative z-10'>
     <CinematicReveal>
       <div className='grid gap-16 lg:grid-cols-[0.9fr_1.1fr] lg:items-center'>
+        {/* Left narrative */}
         <div>
           <div className='text-sm uppercase tracking-[0.35em] text-cyan-300'>
             Sensor platform
@@ -60,6 +79,7 @@ return ( <section
             pipeline systems.
           </p>
 
+          {/* Capability list */}
           <div className='mt-10 space-y-6'>
             {[
               'Pressure sensor arrays',
@@ -68,7 +88,7 @@ return ( <section
               'MQTT communication',
               'Local offline buffering',
               'Predictive analytics',
-            ].map((item) => (
+            ].map((item, index) => (
               <div key={item} className='flex items-center gap-4'>
                 <motion.div
                   className='flex h-10 w-10 items-center justify-center rounded-xl border border-cyan-500/20 bg-cyan-500/10'
@@ -87,6 +107,7 @@ return ( <section
                   transition={{
                     duration: 1.8,
                     repeat: Infinity,
+                    delay: index * 0.08,
                   }}
                 >
                   <div className='h-2 w-2 rounded-full bg-cyan-300' />
@@ -98,6 +119,7 @@ return ( <section
           </div>
         </div>
 
+        {/* Feature cards */}
         <div className='grid gap-6 md:grid-cols-2'>
           {features.map((feature, index) => (
             <motion.div
@@ -111,6 +133,11 @@ return ( <section
                 platformActive
                   ? {
                       y: [0, -4, 0],
+                      borderColor: [
+                        'rgba(255,255,255,0.08)',
+                        'rgba(34,211,238,0.22)',
+                        'rgba(255,255,255,0.08)',
+                      ],
                     }
                   : {}
               }
@@ -132,10 +159,26 @@ return ( <section
                 {feature.description}
               </p>
 
-              <div className='mt-8 h-px bg-gradient-to-r from-cyan-400/40 via-cyan-300/20 to-transparent' />
+              <motion.div
+                className='mt-8 h-px bg-gradient-to-r from-cyan-400/40 via-cyan-300/20 to-transparent'
+                animate={
+                  platformActive
+                    ? {
+                        opacity: [0.3, 1, 0.3],
+                        scaleX: [0.98, 1.02, 0.98],
+                      }
+                    : {}
+                }
+                transition={{
+                  duration: 1.8,
+                  repeat: Infinity,
+                  delay: index * 0.08,
+                }}
+              />
 
               <div className='mt-4 flex items-center justify-between text-sm'>
                 <span className='text-white/40'>Telemetry active</span>
+
                 <motion.span
                   className='text-cyan-300'
                   animate={
@@ -159,8 +202,26 @@ return ( <section
       </div>
     </CinematicReveal>
 
+    {/* Hardware architecture */}
     <CinematicReveal delay={0.25}>
-      <div className='mt-24 rounded-[36px] border border-white/10 bg-white/[0.03] p-10 backdrop-blur-xl'>
+      <motion.div
+        className='mt-24 rounded-[36px] border border-white/10 bg-white/[0.03] p-10 backdrop-blur-xl'
+        animate={
+          platformActive
+            ? {
+                borderColor: [
+                  'rgba(255,255,255,0.08)',
+                  'rgba(34,211,238,0.18)',
+                  'rgba(255,255,255,0.08)',
+                ],
+              }
+            : {}
+        }
+        transition={{
+          duration: 3,
+          repeat: Infinity,
+        }}
+      >
         <div className='text-sm uppercase tracking-[0.35em] text-cyan-300'>
           Hardware architecture
         </div>
@@ -204,31 +265,38 @@ return ( <section
 
               <div className='mt-4 text-sm text-white'>{label}</div>
 
+              {/* Energy conduit */}
               {index < 4 && (
-                <motion.div
-                  className='absolute left-full top-10 hidden h-px w-full bg-gradient-to-r from-cyan-400 to-transparent md:block'
-                  animate={
-                    platformActive
-                      ? {
-                          opacity: [0.4, 1, 0.4],
-                          scaleX: [0.96, 1.04, 0.96],
-                        }
-                      : {}
-                  }
-                  transition={{
-                    duration: 1.8,
-                    repeat: Infinity,
-                    delay: index * 0.12,
-                  }}
-                />
+                <>
+                  <div className='absolute left-full top-10 hidden h-px w-full bg-gradient-to-r from-cyan-400/15 to-transparent md:block' />
+
+                  <motion.div
+                    className='absolute left-full top-10 hidden h-px w-full bg-gradient-to-r from-cyan-300 via-cyan-400 to-transparent md:block'
+                    animate={
+                      platformActive
+                        ? {
+                            opacity: [0.3, 1, 0.3],
+                            scaleX: [0.96, 1.04, 0.96],
+                          }
+                        : {}
+                    }
+                    transition={{
+                      duration: 1.8,
+                      repeat: Infinity,
+                      delay: index * 0.12,
+                    }}
+                  />
+                </>
               )}
             </div>
           ))}
         </div>
 
+        {/* Architecture summary */}
         <div className='mt-10 grid gap-6 border-t border-white/10 pt-8 md:grid-cols-3'>
           <div>
             <div className='text-2xl font-semibold text-white'>Edge</div>
+
             <div className='mt-2 text-white/60'>
               Local telemetry processing and buffering
             </div>
@@ -236,6 +304,7 @@ return ( <section
 
           <div>
             <div className='text-2xl font-semibold text-white'>Cloud</div>
+
             <div className='mt-2 text-white/60'>
               Real-time analytics and infrastructure intelligence
             </div>
@@ -245,12 +314,13 @@ return ( <section
             <div className='text-2xl font-semibold text-white'>
               Operations
             </div>
+
             <div className='mt-2 text-white/60'>
               Biomedical engineering workflows and predictive maintenance
             </div>
           </div>
         </div>
-      </div>
+      </motion.div>
     </CinematicReveal>
   </SectionContainer>
 </section>
