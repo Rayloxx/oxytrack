@@ -3,22 +3,25 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
 import CameraDirector from '@/components/cinematic/CameraDirector';
 import OxygenNetwork3D from '@/components/network/OxygenNetwork3D';
+import { SECTION_IDS } from '@/lib/sectionRegistry';
 
 export default function HeroExperience() {
 const { scrollYProgress } = useScroll();
 
+// Cinematic camera pull-back
 const heroScale = useTransform(scrollYProgress, [0, 0.18], [1, 0.96]);
 const heroY = useTransform(scrollYProgress, [0, 0.18], [0, -40]);
 const heroOpacity = useTransform(scrollYProgress, [0, 0.22], [1, 0.92]);
 
+// Ambient glow
 const glowScale = useTransform(scrollYProgress, [0, 0.2], [1, 1.08]);
 const glowOpacity = useTransform(scrollYProgress, [0, 0.2], [0.08, 0.04]);
 
 return ( <section
-   id='hero'
+   id={SECTION_IDS.hero}
    className='relative min-h-screen overflow-hidden bg-[#020617]'
  >
-{/* Background */} <div className='absolute inset-0'>
+{/* Ambient background */} <div className='absolute inset-0'>
 <motion.div
 className='absolute left-1/2 top-0 h-[900px] w-[900px] -translate-x-1/2 rounded-full bg-cyan-500/[0.08] blur-[220px]'
 style={{
@@ -30,7 +33,7 @@ opacity: glowOpacity,
     <div className='absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(34,211,238,0.06)_0%,transparent_60%)]' />
   </div>
 
-  {/* Grid texture */}
+  {/* Engineering grid */}
   <div className='absolute inset-0 opacity-[0.08]'>
     <div className='absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.04)_1px,transparent_1px)] bg-[size:64px_64px]' />
   </div>
@@ -125,14 +128,14 @@ opacity: glowOpacity,
           className='mt-14 flex flex-wrap gap-4'
         >
           <a
-            href='#technology'
+            href={`#${SECTION_IDS.technology}`}
             className='rounded-2xl bg-cyan-400 px-8 py-4 font-medium text-slate-900 transition hover:bg-cyan-300'
           >
             View mission control
           </a>
 
           <a
-            href='#architecture'
+            href={`#${SECTION_IDS.architecture}`}
             className='rounded-2xl border border-white/15 px-8 py-4 font-medium text-white transition hover:border-cyan-400 hover:text-cyan-300'
           >
             Explore the architecture
