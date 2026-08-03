@@ -7,6 +7,7 @@ useEffect,
 useMemo,
 useState,
 } from 'react';
+import { SECTION_IDS } from '@/lib/sectionRegistry';
 
 export type MotionPhase =
 | 'boot'
@@ -32,10 +33,10 @@ const [phase, setPhase] = useState<MotionPhase>('hero');
 
 useEffect(() => {
 const sections = [
-{ id: 'hero', phase: 'hero' as MotionPhase },
-{ id: 'architecture', phase: 'architecture' as MotionPhase },
-{ id: 'platform', phase: 'platform' as MotionPhase },
-{ id: 'technology', phase: 'command' as MotionPhase },
+{ id: SECTION_IDS.hero, phase: 'hero' as MotionPhase },
+{ id: SECTION_IDS.architecture, phase: 'architecture' as MotionPhase },
+{ id: SECTION_IDS.platform, phase: 'platform' as MotionPhase },
+{ id: SECTION_IDS.technology, phase: 'command' as MotionPhase },
 ];
 
 const observer = new IntersectionObserver(
