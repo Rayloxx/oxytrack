@@ -16,6 +16,7 @@ return ( <div className='pointer-events-none fixed inset-0 z-[2] overflow-hidden
 {/* Main telemetry spine */}
 <motion.div
 className='absolute left-1/2 top-0 h-full w-px -translate-x-1/2 bg-gradient-to-b from-cyan-300/40 via-cyan-300/70 to-cyan-300/20'
+style={{ willChange: 'transform, opacity' }}
 animate={{
 opacity: [0.15 * intensity, 0.7 * intensity, 0.15 * intensity],
 scaleY: [0.98, 1.02, 0.98],
@@ -28,20 +29,21 @@ ease: 'easeInOut',
 />
 
   {/* Traveling telemetry packets */}
-  {Array.from({ length: 16 }).map((_, i) => (
+  {Array.from({ length: 14 }).map((_, i) => (
     <motion.div
       key={i}
       className='absolute left-1/2 h-2 w-2 -translate-x-1/2 rounded-full bg-cyan-300'
-      initial={{ top: '-10%' }}
+      style={{ willChange: 'transform, opacity' }}
+      initial={{ y: -120 }}
       animate={{
-        top: ['-10%', '110%'],
+        y: ['0vh', '110vh'],
         opacity: [0, intensity, intensity, 0],
         scale: [0.6, 1.1, 1, 0.4],
       }}
       transition={{
-        duration: 4.8 - intensity,
+        duration: 4.6 - intensity,
         repeat: Infinity,
-        delay: i * 0.22,
+        delay: i * 0.24,
         ease: 'linear',
       }}
     />
@@ -50,6 +52,7 @@ ease: 'easeInOut',
   {/* Architecture node */}
   <motion.div
     className='absolute left-1/2 top-[28%] h-4 w-4 -translate-x-1/2 rounded-full bg-cyan-300'
+    style={{ willChange: 'transform, box-shadow' }}
     animate={{
       scale: architecture ? [1, 1.5, 1] : [1, 1.08, 1],
       boxShadow: architecture
@@ -73,6 +76,7 @@ ease: 'easeInOut',
   {/* Platform node */}
   <motion.div
     className='absolute left-1/2 top-[52%] h-4 w-4 -translate-x-1/2 rounded-full bg-cyan-300'
+    style={{ willChange: 'transform, box-shadow' }}
     animate={{
       scale: platform ? [1, 1.5, 1] : [1, 1.08, 1],
       boxShadow: platform
@@ -96,6 +100,7 @@ ease: 'easeInOut',
   {/* Command node */}
   <motion.div
     className='absolute left-1/2 top-[74%] h-5 w-5 -translate-x-1/2 rounded-full bg-cyan-300'
+    style={{ willChange: 'transform, box-shadow' }}
     animate={{
       scale: command ? [1, 1.6, 1] : [1, 1.1, 1],
       boxShadow: command
