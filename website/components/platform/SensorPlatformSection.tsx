@@ -1,7 +1,9 @@
 'use client';
 
+import { motion } from 'framer-motion';
 import SectionContainer from '@/components/layout/SectionContainer';
 import CinematicReveal from '@/components/cinematic/CinematicReveal';
+import { useMotionTimeline } from '@/components/cinematic/MotionTimeline';
 
 const features = [
 {
@@ -31,6 +33,9 @@ metric: '97.8%',
 ];
 
 export default function SensorPlatformSection() {
+const timeline = useMotionTimeline();
+const platformActive = timeline.phase === 'platform';
+
 return ( <section
    id='platform'
    className='relative overflow-hidden bg-[#030712] py-32'
@@ -39,7 +44,6 @@ return ( <section
   <SectionContainer className='relative z-10'>
     <CinematicReveal>
       <div className='grid gap-16 lg:grid-cols-[0.9fr_1.1fr] lg:items-center'>
-        {/* Left content */}
         <div>
           <div className='text-sm uppercase tracking-[0.35em] text-cyan-300'>
             Sensor platform
@@ -66,9 +70,27 @@ return ( <section
               'Predictive analytics',
             ].map((item) => (
               <div key={item} className='flex items-center gap-4'>
-                <div className='flex h-10 w-10 items-center justify-center rounded-xl border border-cyan-500/20 bg-cyan-500/10'>
+                <motion.div
+                  className='flex h-10 w-10 items-center justify-center rounded-xl border border-cyan-500/20 bg-cyan-500/10'
+                  animate={
+                    platformActive
+                      ? {
+                          scale: [1, 1.08, 1],
+                          borderColor: [
+                            'rgba(34,211,238,0.2)',
+                            'rgba(34,211,238,0.6)',
+                            'rgba(34,211,238,0.2)',
+                          ],
+                        }
+                      : {}
+                  }
+                  transition={{
+                    duration: 1.8,
+                    repeat: Infinity,
+                  }}
+                >
                   <div className='h-2 w-2 rounded-full bg-cyan-300' />
-                </div>
+                </motion.div>
 
                 <div className='text-white'>{item}</div>
               </div>
@@ -76,12 +98,27 @@ return ( <section
           </div>
         </div>
 
-        {/* Right feature cards */}
         <div className='grid gap-6 md:grid-cols-2'>
-          {features.map((feature) => (
-            <div
+          {features.map((feature, index) => (
+            <motion.div
               key={feature.title}
-              className='rounded-[28px] border border-white/10 bg-white/[0.04] p-8 backdrop-blur-xl transition hover:border-cyan-500/20 hover:bg-white/[0.06]'
+              className={`rounded-[28px] border p-8 backdrop-blur-xl transition-all duration-700 ${
+                platformActive
+                  ? 'border-cyan-400/20 bg-white/[0.05] shadow-[0_0_30px_rgba(34,211,238,0.08)]'
+                  : 'border-white/10 bg-white/[0.04]'
+              }`}
+              animate={
+                platformActive
+                  ? {
+                      y: [0, -4, 0],
+                    }
+                  : {}
+              }
+              transition={{
+                duration: 2.4,
+                repeat: Infinity,
+                delay: index * 0.12,
+              }}
             >
               <div className='text-sm uppercase tracking-[0.25em] text-cyan-300'>
                 {feature.title}
@@ -99,9 +136,24 @@ return ( <section
 
               <div className='mt-4 flex items-center justify-between text-sm'>
                 <span className='text-white/40'>Telemetry active</span>
-                <span className='text-cyan-300'>ONLINE</span>
+                <motion.span
+                  className='text-cyan-300'
+                  animate={
+                    platformActive
+                      ? {
+                          opacity: [0.6, 1, 0.6],
+                        }
+                      : {}
+                  }
+                  transition={{
+                    duration: 1.2,
+                    repeat: Infinity,
+                  }}
+                >
+                  ONLINE
+                </motion.span>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
@@ -122,14 +174,53 @@ return ( <section
             'Biomedical dashboard',
           ].map((label, index) => (
             <div key={label} className='relative text-center'>
-              <div className='mx-auto flex h-20 w-20 items-center justify-center rounded-2xl border border-cyan-500/20 bg-cyan-500/10 text-cyan-300'>
+              <motion.div
+                className='mx-auto flex h-20 w-20 items-center justify-center rounded-2xl border border-cyan-500/20 bg-cyan-500/10 text-cyan-300'
+                animate={
+                  platformActive
+                    ? {
+                        scale: [1, 1.08, 1],
+                        borderColor: [
+                          'rgba(34,211,238,0.2)',
+                          'rgba(34,211,238,0.7)',
+                          'rgba(34,211,238,0.2)',
+                        ],
+                        backgroundColor: [
+                          'rgba(34,211,238,0.10)',
+                          'rgba(34,211,238,0.22)',
+                          'rgba(34,211,238,0.10)',
+                        ],
+                      }
+                    : {}
+                }
+                transition={{
+                  duration: 1.6,
+                  repeat: Infinity,
+                  delay: index * 0.14,
+                }}
+              >
                 {index + 1}
-              </div>
+              </motion.div>
 
               <div className='mt-4 text-sm text-white'>{label}</div>
 
               {index < 4 && (
-                <div className='absolute left-full top-10 hidden h-px w-full bg-gradient-to-r from-cyan-400 to-transparent md:block' />
+                <motion.div
+                  className='absolute left-full top-10 hidden h-px w-full bg-gradient-to-r from-cyan-400 to-transparent md:block'
+                  animate={
+                    platformActive
+                      ? {
+                          opacity: [0.4, 1, 0.4],
+                          scaleX: [0.96, 1.04, 0.96],
+                        }
+                      : {}
+                  }
+                  transition={{
+                    duration: 1.8,
+                    repeat: Infinity,
+                    delay: index * 0.12,
+                  }}
+                />
               )}
             </div>
           ))}
