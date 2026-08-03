@@ -6,6 +6,7 @@ import BootSequence from '@/components/boot/BootSequence';
 import GlobalNetworkField from '@/components/cinematic/GlobalNetworkField';
 import TelemetryPulseBus from '@/components/cinematic/TelemetryPulseBus';
 import NetworkContinuationBridge from '@/components/cinematic/NetworkContinuationBridge';
+import BuildDiagnostics from '@/components/cinematic/BuildDiagnostics';
 import { MotionTimelineProvider } from '@/components/cinematic/MotionTimeline';
 
 import HeroExperience from '@/components/hero/HeroExperience';
@@ -23,7 +24,10 @@ export default function HomePage() {
 const [bootComplete, setBootComplete] = useState(false);
 
 return ( <MotionTimelineProvider> <main className='relative min-h-screen overflow-hidden bg-[#020617] text-white'>
-{/* Global cinematic background */} <GlobalNetworkField />
+{/* Development diagnostics */} <BuildDiagnostics />
+
+    {/* Global cinematic background */}
+    <GlobalNetworkField />
 
     {/* Global telemetry pulse bus */}
     <TelemetryPulseBus />
@@ -39,7 +43,7 @@ return ( <MotionTimelineProvider> <main className='relative min-h-screen overflo
         bootComplete ? 'opacity-100' : 'opacity-0'
       }`}
     >
-      {/* Hero experience */}
+      {/* Hero */}
       <HeroExperience />
 
       {/* Hero → Architecture bridge */}
@@ -54,7 +58,7 @@ return ( <MotionTimelineProvider> <main className='relative min-h-screen overflo
       {/* Mission control */}
       <MissionControlSection />
 
-      {/* Intelligence */}
+      {/* Intelligence engine */}
       <IntelligenceEngineSection />
 
       {/* Hospital topology */}
