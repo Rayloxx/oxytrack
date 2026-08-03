@@ -34,7 +34,6 @@ Dashboard & Mobile Alerts
 
 * Pressure transducers
 * Flow sensors
-* Temperature sensors
 
 ### Edge layer
 
