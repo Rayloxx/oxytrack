@@ -1,7 +1,9 @@
 'use client';
 
+import { motion } from 'framer-motion';
 import SectionContainer from '@/components/layout/SectionContainer';
 import CinematicReveal from '@/components/cinematic/CinematicReveal';
+import { useMotionTimeline } from '@/components/cinematic/MotionTimeline';
 
 const steps = [
 {
@@ -43,6 +45,9 @@ description:
 ];
 
 export default function DataFlowSection() {
+const timeline = useMotionTimeline();
+const activated = timeline.phase === 'architecture';
+
 return ( <section
    id='architecture'
    className='relative overflow-hidden bg-[#020617] py-32'
@@ -72,14 +77,57 @@ return ( <section
         {steps.map((step, index) => (
           <div key={step.title} className='relative'>
             {index < steps.length - 1 && (
-              <div className='absolute left-8 top-16 h-24 w-px bg-gradient-to-b from-cyan-400 to-transparent' />
+              <motion.div
+                className='absolute left-8 top-16 h-24 w-px bg-gradient-to-b from-cyan-400 to-transparent'
+                animate={
+                  activated && index === 0
+                    ? {
+                        opacity: [0.4, 1, 0.4],
+                        scaleY: [1, 1.08, 1],
+                      }
+                    : {}
+                }
+                transition={{
+                  duration: 1.8,
+                  repeat: Infinity,
+                }}
+              />
             )}
 
-            <div className='grid gap-8 rounded-[28px] border border-white/10 bg-white/[0.03] p-8 backdrop-blur-xl md:grid-cols-[96px_1fr]'>
+            <motion.div
+              className={`grid gap-8 rounded-[28px] border p-8 backdrop-blur-xl transition-all duration-700 md:grid-cols-[96px_1fr] ${
+                activated && index === 0
+                  ? 'border-cyan-400/40 bg-cyan-500/[0.08] shadow-[0_0_40px_rgba(34,211,238,0.12)]'
+                  : 'border-white/10 bg-white/[0.03]'
+              }`}
+            >
               <div className='flex items-start justify-center md:justify-start'>
-                <div className='flex h-16 w-16 items-center justify-center rounded-2xl border border-cyan-500/20 bg-cyan-500/10 text-xl font-semibold text-cyan-300'>
+                <motion.div
+                  className='flex h-16 w-16 items-center justify-center rounded-2xl border text-xl font-semibold'
+                  animate={
+                    activated && index === 0
+                      ? {
+                          scale: [1, 1.08, 1],
+                          borderColor: [
+                            'rgba(34,211,238,0.3)',
+                            'rgba(34,211,238,0.8)',
+                            'rgba(34,211,238,0.3)',
+                          ],
+                          backgroundColor: [
+                            'rgba(34,211,238,0.10)',
+                            'rgba(34,211,238,0.22)',
+                            'rgba(34,211,238,0.10)',
+                          ],
+                        }
+                      : {}
+                  }
+                  transition={{
+                    duration: 1.8,
+                    repeat: Infinity,
+                  }}
+                >
                   {String(index + 1).padStart(2, '0')}
-                </div>
+                </motion.div>
               </div>
 
               <div>
@@ -95,7 +143,7 @@ return ( <section
                   {step.description}
                 </p>
               </div>
-            </div>
+            </motion.div>
           </div>
         ))}
       </div>
@@ -109,7 +157,9 @@ return ( <section
 
         <div className='mt-6 grid gap-6 md:grid-cols-3'>
           <div>
-            <div className='text-3xl font-semibold text-white'>Real time</div>
+            <div className='text-3xl font-semibold text-white'>
+              Real time
+            </div>
             <div className='mt-2 text-white/60'>
               Pressure and flow monitoring across the oxygen network
             </div>
