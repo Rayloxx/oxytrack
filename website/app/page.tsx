@@ -4,6 +4,7 @@ import { useState } from 'react';
 
 import BootSequence from '@/components/boot/BootSequence';
 import GlobalNetworkField from '@/components/cinematic/GlobalNetworkField';
+import TelemetryPulseBus from '@/components/cinematic/TelemetryPulseBus';
 import NetworkContinuationBridge from '@/components/cinematic/NetworkContinuationBridge';
 import { MotionTimelineProvider } from '@/components/cinematic/MotionTimeline';
 
@@ -22,7 +23,10 @@ export default function HomePage() {
 const [bootComplete, setBootComplete] = useState(false);
 
 return ( <MotionTimelineProvider> <main className='relative min-h-screen overflow-hidden bg-[#020617] text-white'>
-{/* Global animated network field */} <GlobalNetworkField />
+{/* Global cinematic background */} <GlobalNetworkField />
+
+    {/* Global telemetry pulse bus */}
+    <TelemetryPulseBus />
 
     {/* Cinematic boot sequence */}
     {!bootComplete && (
@@ -38,7 +42,7 @@ return ( <MotionTimelineProvider> <main className='relative min-h-screen overflo
       {/* Hero experience */}
       <HeroExperience />
 
-      {/* Cinematic network continuation */}
+      {/* Hero → Architecture bridge */}
       <NetworkContinuationBridge />
 
       {/* Architecture */}
@@ -47,7 +51,7 @@ return ( <MotionTimelineProvider> <main className='relative min-h-screen overflo
       {/* Platform */}
       <SensorPlatformSection />
 
-      {/* Dashboard */}
+      {/* Mission control */}
       <MissionControlSection />
 
       {/* Intelligence */}
@@ -65,7 +69,7 @@ return ( <MotionTimelineProvider> <main className='relative min-h-screen overflo
       {/* Clinical reliability */}
       <ClinicalReliabilitySection />
 
-      {/* Final CTA */}
+      {/* Final command */}
       <FinalCommandSection />
     </div>
   </main>
