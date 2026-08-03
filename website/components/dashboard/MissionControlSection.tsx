@@ -1,16 +1,36 @@
 'use client';
 
+import { motion } from 'framer-motion';
 import SectionContainer from '@/components/layout/SectionContainer';
 import CinematicReveal from '@/components/cinematic/CinematicReveal';
 import { useTelemetrySync } from '@/components/network/TelemetrySync';
+import { useMotionTimeline } from '@/components/cinematic/MotionTimeline';
 
 export default function MissionControlSection() {
 const telemetry = useTelemetrySync();
+const timeline = useMotionTimeline();
+const commandActive = timeline.phase === 'command';
 
 return ( <section
    id='technology'
    className='relative overflow-hidden bg-[#020617] py-32'
- > <div className='absolute inset-0'> <div className='absolute left-1/2 top-1/2 h-[1000px] w-[1000px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-500/[0.04] blur-[220px]' /> </div>
+ > <div className='absolute inset-0'>
+<motion.div
+className='absolute left-1/2 top-1/2 h-[1000px] w-[1000px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-500/[0.04] blur-[220px]'
+animate={
+commandActive
+? {
+scale: [1, 1.06, 1],
+opacity: [0.03, 0.07, 0.03],
+}
+: {}
+}
+transition={{
+duration: 6,
+repeat: Infinity,
+ease: 'easeInOut',
+}}
+/> </div>
 
   <SectionContainer className='relative z-10'>
     <CinematicReveal>
@@ -33,7 +53,24 @@ return ( <section
     </CinematicReveal>
 
     <CinematicReveal delay={0.2}>
-      <div className='mt-20 rounded-[36px] border border-white/10 bg-white/[0.03] p-8 backdrop-blur-2xl'>
+      <motion.div
+        className='mt-20 rounded-[36px] border border-white/10 bg-white/[0.03] p-8 backdrop-blur-2xl'
+        animate={
+          commandActive
+            ? {
+                borderColor: [
+                  'rgba(255,255,255,0.08)',
+                  'rgba(34,211,238,0.18)',
+                  'rgba(255,255,255,0.08)',
+                ],
+              }
+            : {}
+        }
+        transition={{
+          duration: 3,
+          repeat: Infinity,
+        }}
+      >
         {/* Dashboard header */}
         <div className='flex flex-col gap-6 border-b border-white/10 pb-6 md:flex-row md:items-center md:justify-between'>
           <div>
@@ -50,7 +87,24 @@ return ( <section
             </div>
           </div>
 
-          <div className='flex items-center gap-3 rounded-2xl border border-cyan-500/20 bg-cyan-500/10 px-4 py-3'>
+          <motion.div
+            className='flex items-center gap-3 rounded-2xl border border-cyan-500/20 bg-cyan-500/10 px-4 py-3'
+            animate={
+              commandActive
+                ? {
+                    boxShadow: [
+                      '0 0 0 rgba(34,211,238,0)',
+                      '0 0 24px rgba(34,211,238,0.18)',
+                      '0 0 0 rgba(34,211,238,0)',
+                    ],
+                  }
+                : {}
+            }
+            transition={{
+              duration: 2,
+              repeat: Infinity,
+            }}
+          >
             <div className='h-2 w-2 rounded-full bg-cyan-300 animate-pulse' />
 
             <div>
@@ -62,7 +116,7 @@ return ( <section
                 MQTT stream active
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
 
         {/* KPI row */}
@@ -84,10 +138,27 @@ return ( <section
               label: 'Telemetry uptime',
               value: '99.98%',
             },
-          ].map((item) => (
-            <div
+          ].map((item, index) => (
+            <motion.div
               key={item.label}
               className='rounded-2xl border border-white/10 bg-[#071A35]/80 p-6'
+              animate={
+                commandActive
+                  ? {
+                      y: [0, -4, 0],
+                      borderColor: [
+                        'rgba(255,255,255,0.08)',
+                        'rgba(34,211,238,0.22)',
+                        'rgba(255,255,255,0.08)',
+                      ],
+                    }
+                  : {}
+              }
+              transition={{
+                duration: 2.4,
+                repeat: Infinity,
+                delay: index * 0.12,
+              }}
             >
               <div className='text-xs uppercase tracking-[0.22em] text-cyan-300'>
                 {item.label}
@@ -100,7 +171,7 @@ return ( <section
               <div className='mt-2 text-sm text-white/50'>
                 Live operational telemetry
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
 
@@ -119,9 +190,22 @@ return ( <section
                 </div>
               </div>
 
-              <div className='rounded-xl border border-cyan-500/20 bg-cyan-500/10 px-3 py-2 text-sm text-cyan-300'>
+              <motion.div
+                className='rounded-xl border border-cyan-500/20 bg-cyan-500/10 px-3 py-2 text-sm text-cyan-300'
+                animate={
+                  commandActive
+                    ? {
+                        scale: [1, 1.05, 1],
+                      }
+                    : {}
+                }
+                transition={{
+                  duration: 1.6,
+                  repeat: Infinity,
+                }}
+              >
                 Stable
-              </div>
+              </motion.div>
             </div>
 
             <div className='mt-8 h-64 rounded-2xl border border-white/10 bg-[#031124] p-4'>
@@ -143,11 +227,22 @@ return ( <section
                   </linearGradient>
                 </defs>
 
-                <path
+                <motion.path
                   d='M0 110 C40 108 80 106 120 104 S200 102 240 100 S320 98 360 101 S440 105 480 102 S540 98 600 100'
                   stroke='url(#pressureLine)'
                   strokeWidth='3'
                   fill='none'
+                  animate={
+                    commandActive
+                      ? {
+                          pathLength: [0.95, 1, 0.95],
+                        }
+                      : {}
+                  }
+                  transition={{
+                    duration: 2.2,
+                    repeat: Infinity,
+                  }}
                 />
 
                 <path
@@ -179,7 +274,9 @@ return ( <section
               </div>
 
               <div>
-                <div className='text-2xl font-semibold text-white'>0</div>
+                <div className='text-2xl font-semibold text-white'>
+                  0
+                </div>
 
                 <div className='text-sm text-white/50'>
                   Critical pressure events
@@ -195,47 +292,60 @@ return ( <section
             </div>
 
             <div className='mt-6 space-y-4'>
-              <div className='rounded-2xl border border-cyan-500/20 bg-cyan-500/10 p-4'>
-                <div className='flex items-center justify-between'>
-                  <div className='font-medium text-white'>
-                    ICU pressure stability
+              {[
+                {
+                  title: 'ICU pressure stability',
+                  value: '4.21 bar',
+                  body: 'Pressure remains within operational tolerance.',
+                },
+                {
+                  title: 'Theatre flow trend',
+                  value: 'Normal',
+                  body: 'Oxygen consumption remains within expected range.',
+                },
+                {
+                  title: 'Infrastructure health',
+                  value: '97.8%',
+                  body: 'No leak signatures detected across monitored branches.',
+                },
+              ].map((alert, index) => (
+                <motion.div
+                  key={alert.title}
+                  className={`rounded-2xl p-4 ${
+                    index === 0
+                      ? 'border border-cyan-500/20 bg-cyan-500/10'
+                      : 'border border-white/10 bg-white/[0.03]'
+                  }`}
+                  animate={
+                    commandActive
+                      ? {
+                          borderColor: [
+                            'rgba(34,211,238,0.2)',
+                            'rgba(34,211,238,0.5)',
+                            'rgba(34,211,238,0.2)',
+                          ],
+                        }
+                      : {}
+                  }
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    delay: index * 0.2,
+                  }}
+                >
+                  <div className='flex items-center justify-between'>
+                    <div className='font-medium text-white'>
+                      {alert.title}
+                    </div>
+
+                    <div className='text-cyan-300'>{alert.value}</div>
                   </div>
 
-                  <div className='text-cyan-300'>4.21 bar</div>
-                </div>
-
-                <div className='mt-2 text-sm text-white/60'>
-                  Pressure remains within operational tolerance.
-                </div>
-              </div>
-
-              <div className='rounded-2xl border border-white/10 bg-white/[0.03] p-4'>
-                <div className='flex items-center justify-between'>
-                  <div className='font-medium text-white'>
-                    Theatre flow trend
+                  <div className='mt-2 text-sm text-white/60'>
+                    {alert.body}
                   </div>
-
-                  <div className='text-cyan-300'>Normal</div>
-                </div>
-
-                <div className='mt-2 text-sm text-white/60'>
-                  Oxygen consumption remains within expected range.
-                </div>
-              </div>
-
-              <div className='rounded-2xl border border-white/10 bg-white/[0.03] p-4'>
-                <div className='flex items-center justify-between'>
-                  <div className='font-medium text-white'>
-                    Infrastructure health
-                  </div>
-
-                  <div className='text-cyan-300'>97.8%</div>
-                </div>
-
-                <div className='mt-2 text-sm text-white/60'>
-                  No leak signatures detected across monitored branches.
-                </div>
-              </div>
+                </motion.div>
+              ))}
             </div>
 
             <div className='mt-8 border-t border-white/10 pt-6'>
@@ -248,7 +358,9 @@ return ( <section
                   Regulator inspection window
                 </span>
 
-                <span className='font-medium text-white'>14 days</span>
+                <span className='font-medium text-white'>
+                  14 days
+                </span>
               </div>
 
               <div className='mt-3 flex items-center justify-between'>
@@ -269,7 +381,7 @@ return ( <section
             </div>
           </div>
         </div>
-      </div>
+      </motion.div>
     </CinematicReveal>
   </SectionContainer>
 </section>
