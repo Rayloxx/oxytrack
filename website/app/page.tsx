@@ -4,6 +4,7 @@ import { useState } from 'react';
 
 import BootSequence from '@/components/boot/BootSequence';
 import GlobalNetworkField from '@/components/cinematic/GlobalNetworkField';
+import NetworkContinuationBridge from '@/components/cinematic/NetworkContinuationBridge';
 import { MotionTimelineProvider } from '@/components/cinematic/MotionTimeline';
 
 import HeroExperience from '@/components/hero/HeroExperience';
@@ -28,30 +29,43 @@ return ( <MotionTimelineProvider> <main className='relative min-h-screen overflo
       <BootSequence onComplete={() => setBootComplete(true)} />
     )}
 
-    {/* Main experience */}
+    {/* Main cinematic experience */}
     <div
       className={`relative z-10 transition-opacity duration-1000 ${
         bootComplete ? 'opacity-100' : 'opacity-0'
       }`}
     >
+      {/* Hero experience */}
       <HeroExperience />
 
+      {/* Cinematic network continuation */}
+      <NetworkContinuationBridge />
+
+      {/* Architecture */}
       <DataFlowSection />
 
+      {/* Platform */}
       <SensorPlatformSection />
 
+      {/* Dashboard */}
       <MissionControlSection />
 
+      {/* Intelligence */}
       <IntelligenceEngineSection />
 
+      {/* Hospital topology */}
       <HospitalTopologySection />
 
+      {/* Economic impact */}
       <EconomicImpactSection />
 
+      {/* Command center */}
       <CommandCenterSection />
 
+      {/* Clinical reliability */}
       <ClinicalReliabilitySection />
 
+      {/* Final CTA */}
       <FinalCommandSection />
     </div>
   </main>
