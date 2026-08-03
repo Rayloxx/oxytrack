@@ -1,6 +1,7 @@
 'use client';
 
 import SectionContainer from '@/components/layout/SectionContainer';
+import CinematicReveal from '@/components/cinematic/CinematicReveal';
 
 const steps = [
 {
@@ -48,83 +49,94 @@ return ( <section
  > <div className='absolute inset-0'> <div className='absolute left-1/2 top-0 h-[700px] w-[700px] -translate-x-1/2 rounded-full bg-cyan-500/[0.05] blur-[160px]' /> </div>
 
   <SectionContainer className='relative z-10'>
-    <div className='max-w-3xl'>
-      <div className='text-sm uppercase tracking-[0.35em] text-cyan-300'>
-        System architecture
+    <CinematicReveal>
+      <div className='max-w-3xl'>
+        <div className='text-sm uppercase tracking-[0.35em] text-cyan-300'>
+          System architecture
+        </div>
+
+        <h2 className='mt-6 text-4xl font-semibold text-white md:text-5xl'>
+          From tank to bedside
+        </h2>
+
+        <p className='mt-6 text-lg leading-8 text-white/65'>
+          OxyTrack creates a continuous telemetry layer across the hospital
+          oxygen network, transforming pressure and flow data into
+          operational intelligence.
+        </p>
       </div>
+    </CinematicReveal>
 
-      <h2 className='mt-6 text-4xl font-semibold text-white md:text-5xl'>
-        From tank to bedside
-      </h2>
+    <CinematicReveal delay={0.15}>
+      <div className='mt-20 space-y-8'>
+        {steps.map((step, index) => (
+          <div key={step.title} className='relative'>
+            {index < steps.length - 1 && (
+              <div className='absolute left-8 top-16 h-24 w-px bg-gradient-to-b from-cyan-400 to-transparent' />
+            )}
 
-      <p className='mt-6 text-lg leading-8 text-white/65'>
-        OxyTrack creates a continuous telemetry layer across the hospital
-        oxygen network, transforming pressure and flow data into operational
-        intelligence.
-      </p>
-    </div>
-
-    <div className='mt-20 space-y-8'>
-      {steps.map((step, index) => (
-        <div key={step.title} className='relative'>
-          {index < steps.length - 1 && (
-            <div className='absolute left-8 top-16 h-24 w-px bg-gradient-to-b from-cyan-400 to-transparent' />
-          )}
-
-          <div className='grid gap-8 rounded-[28px] border border-white/10 bg-white/[0.03] p-8 backdrop-blur-xl md:grid-cols-[96px_1fr]'>
-            <div className='flex items-start justify-center md:justify-start'>
-              <div className='flex h-16 w-16 items-center justify-center rounded-2xl border border-cyan-500/20 bg-cyan-500/10 text-xl font-semibold text-cyan-300'>
-                {String(index + 1).padStart(2, '0')}
-              </div>
-            </div>
-
-            <div>
-              <div className='text-sm uppercase tracking-[0.28em] text-cyan-300'>
-                {step.subtitle}
+            <div className='grid gap-8 rounded-[28px] border border-white/10 bg-white/[0.03] p-8 backdrop-blur-xl md:grid-cols-[96px_1fr]'>
+              <div className='flex items-start justify-center md:justify-start'>
+                <div className='flex h-16 w-16 items-center justify-center rounded-2xl border border-cyan-500/20 bg-cyan-500/10 text-xl font-semibold text-cyan-300'>
+                  {String(index + 1).padStart(2, '0')}
+                </div>
               </div>
 
-              <h3 className='mt-3 text-2xl font-semibold text-white'>
-                {step.title}
-              </h3>
+              <div>
+                <div className='text-sm uppercase tracking-[0.28em] text-cyan-300'>
+                  {step.subtitle}
+                </div>
 
-              <p className='mt-4 max-w-3xl leading-7 text-white/65'>
-                {step.description}
-              </p>
+                <h3 className='mt-3 text-2xl font-semibold text-white'>
+                  {step.title}
+                </h3>
+
+                <p className='mt-4 max-w-3xl leading-7 text-white/65'>
+                  {step.description}
+                </p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </CinematicReveal>
+
+    <CinematicReveal delay={0.3}>
+      <div className='mt-20 rounded-[32px] border border-cyan-500/20 bg-cyan-500/10 p-10'>
+        <div className='text-sm uppercase tracking-[0.35em] text-cyan-300'>
+          End-to-end telemetry
+        </div>
+
+        <div className='mt-6 grid gap-6 md:grid-cols-3'>
+          <div>
+            <div className='text-3xl font-semibold text-white'>Real time</div>
+            <div className='mt-2 text-white/60'>
+              Pressure and flow monitoring across the oxygen network
+            </div>
+          </div>
+
+          <div>
+            <div className='text-3xl font-semibold text-white'>
+              Predictive
+            </div>
+            <div className='mt-2 text-white/60'>
+              Early leak detection and infrastructure health analytics
+            </div>
+          </div>
+
+          <div>
+            <div className='text-3xl font-semibold text-white'>
+              Actionable
+            </div>
+            <div className='mt-2 text-white/60'>
+              Biomedical engineering workflows and maintenance response
             </div>
           </div>
         </div>
-      ))}
-    </div>
-
-    <div className='mt-20 rounded-[32px] border border-cyan-500/20 bg-cyan-500/10 p-10'>
-      <div className='text-sm uppercase tracking-[0.35em] text-cyan-300'>
-        End-to-end telemetry
       </div>
-
-      <div className='mt-6 grid gap-6 md:grid-cols-3'>
-        <div>
-          <div className='text-3xl font-semibold text-white'>Real time</div>
-          <div className='mt-2 text-white/60'>
-            Pressure and flow monitoring across the oxygen network
-          </div>
-        </div>
-
-        <div>
-          <div className='text-3xl font-semibold text-white'>Predictive</div>
-          <div className='mt-2 text-white/60'>
-            Early leak detection and infrastructure health analytics
-          </div>
-        </div>
-
-        <div>
-          <div className='text-3xl font-semibold text-white'>Actionable</div>
-          <div className='mt-2 text-white/60'>
-            Biomedical engineering workflows and maintenance response
-          </div>
-        </div>
-      </div>
-    </div>
+    </CinematicReveal>
   </SectionContainer>
 </section>
+
 );
 }
